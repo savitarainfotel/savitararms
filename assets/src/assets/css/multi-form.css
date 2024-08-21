@@ -1,0 +1,105 @@
+.no-js .multi-step-form fieldset button,
+.no-js .multi-step-form h2,
+.multi-step-form.edit-form fieldset button,
+.multi-step-form.edit-form h2 {
+	display: none !important;
+}
+
+.no-js .multi-step-form fieldset,
+.multi-step-form.edit-form fieldset {
+	display: block !important;
+}
+
+.no-js .multi-step-form [type=submit],
+.no-js .multi-step-form [type=reset],
+.multi-step-form.edit-form [type=submit],
+.multi-step-form.edit-form [type=reset] {
+	display: inline-block !important;
+}
+
+.no-js .multi-step-form .steps,
+.multi-step-form.edit-form .steps {
+	display: none;
+}
+
+.multi-step-form fieldset {
+	display: none;
+}
+
+.multi-step-form fieldset:first-of-type {
+	display: block;
+}
+
+.multi-step-form fieldset.hidden {
+	display: none;
+}
+
+.multi-step-form fieldset.visible {
+	display: block;
+}
+
+.multi-step-form .steps button {
+	border: 0;
+}
+
+.multi-step-form .steps [disabled] {
+	background: none;
+}
+
+.multi-step-form .steps .active {
+	background: #eee;
+}
+
+.error-text {
+	color: red;
+}
+  
+.rating {
+	margin-top: 40px;
+	border: none;
+	float: left;
+}
+
+.rating > label {
+	color: #90a0a3;
+	float: right;
+}
+
+.rating > label:before {
+	margin: 5px;
+	font-size: 1.5em;
+	font-family: "Font Awesome 5 Pro";
+	content: "\f005";
+	display: inline-block;
+}
+
+.rating > input {
+	display: none;
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+	color: #4361ee;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label {
+	color: #2e46b5;
+}
+  
+
+/* <div class="rating">
+												<input type="radio" id="star5" name="rating" value="5" />
+												<label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+												<input type="radio" id="star4" name="rating" value="4" />
+												<label class="star" for="star4" title="Great" aria-hidden="true"></label>
+												<input type="radio" id="star3" name="rating" value="3" />
+												<label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+												<input type="radio" id="star2" name="rating" value="2" />
+												<label class="star" for="star2" title="Good" aria-hidden="true"></label>
+												<input type="radio" id="star1" name="rating" value="1" />
+												<label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+											</div> */
