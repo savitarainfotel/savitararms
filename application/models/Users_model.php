@@ -13,6 +13,7 @@ class Users_model extends MY_Model {
 	{
 		$this->db->select($count === false ? $this->select_column : 'u.id')
 				 ->from($this->table)
+				 ->where(['ut.is_admin' => $this->input->post('is_admin') ?? 0])
 				 ->where(['u.is_blocked' => 0, 'ut.is_delete' => 0, 'ut.is_super_admin' => 0])
 				 ->join(USER_TYPES_TABLE." AS ut", 'ut.id = u.type');
 
