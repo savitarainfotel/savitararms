@@ -17,6 +17,10 @@ class Users_model extends MY_Model {
 				 ->where(['u.is_blocked' => 0, 'ut.is_delete' => 0, 'ut.is_super_admin' => 0])
 				 ->join(USER_TYPES_TABLE." AS ut", 'ut.id = u.type');
 
+		if(!$this->user->is_admin && !$this->user->is_super_admin) {
+			$this->db->where('u.id', $this->user->id);
+		}
+
 		if($count === false) $this->datatable();
 	}
 }

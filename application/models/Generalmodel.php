@@ -38,7 +38,7 @@ class Generalmodel extends MY_Model
     }
 
     public function getUserProfile($user_id){
-        $this->db->select('l.*, ut.type_name AS user_role, ut.is_super_admin')
+        $this->db->select('l.*, ut.type_name AS user_role, ut.is_super_admin, ut.is_admin')
                  ->from(USERS_TABLE.' AS l')
                  ->where('l.is_blocked', 0)
                  ->where('l.id', $user_id)
@@ -47,53 +47,18 @@ class Generalmodel extends MY_Model
         return $this->db->get()->row();
     }
 
-    public function userTypeList($where = '') {
-        $this->db->select('ut.id, ut.type_name')
-                 ->from(USER_TYPES_TABLE.' AS ut')
-                 ->where(['ut.is_delete' => 0])
-                 ->order_by('ut.id ASC');
-
-        return $this->db->get()->result();
-    }
-
-    public function getAssigneeUsers($assignees){
-        if(!empty($assignees)){
-            $this->db->select('u.id, CONCAT(u.first_name, CASE WHEN u.last_name IS NULL THEN "" ELSE CONCAT( " ", u.last_name, "" ) END) as assignee')
-                     ->where(['u.is_blocked' => 0])
-                     ->where_in('u.id', explode(',', $assignees));
-
-            return $this->db->get('users AS u')->result_array();
-        } else 
-            return [];
-    }
-
-    public function nationalityList() {
-        $this->db->select('*')
-                 ->from(NATIONALITY_TABLE)
-                 ->order_by('name ASC');
-
-        return $this->db->get()->result();
-    }
-
-    public function getUsers() {
+    public function getClients() {
         $this->db->select("u.id, u.first_name, u.last_name");
-        if(!$this->user->is_super_admin) {
+
+        if(!$this->user->is_admin && !$this->user->is_super_admin) {
             $this->db->where('u.id', $this->user->id);
         }
 
         $this->db->where('u.is_blocked', 0);
+        $this->db->where('ut.is_admin', 0);
         $this->db->where('ut.is_super_admin', 0);
         $this->db->join(USER_TYPES_TABLE." AS ut", 'ut.id = u.type');
 
-        return $this->db->get('users AS u')->result();
-    }
-
-    public function departureList() {
-        $this->db->select('*')
-                 ->from(DESTINATION_PLACES_TABLE)
-                 ->where('is_deleted', 0)
-                 ->order_by('name ASC');
-
-        return $this->db->get()->result();
+        return $this->db->get(USERS_TABLE.' AS u')->result_array();
     }
 }

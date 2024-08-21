@@ -89,7 +89,17 @@ class Users extends MY_Controller {
             $this->breadcrumb->add('Clients', site_url($this->redirect));
             $this->breadcrumb->add('Create', site_url($this->redirect));
 
-            $data['userTypeList'] = $this->generalmodel->getAll(USER_TYPES_TABLE, 'id, type_name', ['is_delete' => 0], 'id ASC');
+            $where = ['is_delete' => 0];
+
+            if(!$this->user->is_admin) {
+                $where['is_admin'] = 0;
+            }
+
+            if(!$this->user->is_super_admin) {
+                $where['is_super_admin'] = 0;
+            }
+
+            $data['userTypeList'] = $this->generalmodel->getAll(USER_TYPES_TABLE, 'id, type_name', $where, 'id ASC');
 
             return $this->template->load('template', $this->redirect.'/create', $data);
         }
@@ -135,7 +145,17 @@ class Users extends MY_Controller {
             $this->breadcrumb->add('Clients', site_url($this->redirect));
             $this->breadcrumb->add('Edit', site_url($this->redirect));
 
-            $data['userTypeList'] = $this->generalmodel->getAll(USER_TYPES_TABLE, 'id, type_name', ['is_delete' => 0], 'id ASC');
+            $where = ['is_delete' => 0];
+
+            if(!$this->user->is_admin) {
+                $where['is_admin'] = 0;
+            }
+
+            if(!$this->user->is_super_admin) {
+                $where['is_super_admin'] = 0;
+            }
+
+            $data['userTypeList'] = $this->generalmodel->getAll(USER_TYPES_TABLE, 'id, type_name', $where, 'id ASC');
 
             return $this->template->load('template', $this->redirect.'/create', $data);
         }
