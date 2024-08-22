@@ -317,7 +317,7 @@ class Invites extends MY_Controller {
             $sub_array[] = $sr++;
 
             $sub_array[] = anchor($this->redirect.'/view-sent-invite/'.e_id($record->id), $record->property_name, 'class="text-primary text-decoration"');
-            $sub_array[] = $record->status;
+            $sub_array[] = status($record->status);
             $sub_array[] = date('d-m-Y', strtotime($record->created_at));
 
             $data[] = $sub_array;

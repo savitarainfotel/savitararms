@@ -90,22 +90,18 @@ if ( ! function_exists('responseMsg'))
 
 function status($status){
     switch ($status) {
-        case 'Accepted':
+        /* case '':
             $class = 'info';
-            break;
-        case 'Quotation sent':
-        case 'Cold':
+            break; */
+        case 'Created':
             $class = 'primary';
             break;
-        case 'New':
-        case 'Quotation Sent':
+        case 'Email Sent':
             $class = 'success';
             break;
-        case 'Cancel':
-        case 'Hot':
+        /* case 'Hot':
             $class = 'danger';
-            break;
-        case 'Scheduled':
+            break; */
         default:
             $class = 'warning';
             break;
