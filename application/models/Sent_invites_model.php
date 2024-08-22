@@ -25,4 +25,65 @@ class Sent_invites_model extends MY_Model {
 
 		if($count === false) $this->datatable();
 	}
+
+	public function send_invites(&$postArray, &$inviteData)
+	{
+		$send_invite_ids = [];
+
+		$this->db->trans_start();
+
+		foreach($postArray['property_ids'] as $property_id) {
+			$insertArray = [
+				'invite_id'     => $postArray['invite_id'],
+				'property_id'   => $property_id
+			];
+
+			$send_invite_id = $this->add($insertArray, SEND_INVITES_TABLE);
+
+			$send_invite_ids[] = [
+				'property_id' 	 => $property_id,
+				'send_invite_id' => $send_invite_id,
+				'platforms' 	 => $this->generalmodel->getRatingPlatforms($property_id, 1)
+			];
+		}
+
+		$this->db->trans_complete();
+
+		$trans_status = $this->db->trans_status();
+
+		if($trans_status === true) {
+			foreach ($send_invite_ids as $send_invite_id) {
+				$rating_platforms = $email_settings = [];
+				foreach ($send_invite_id['platforms'] as $platform) {
+					if(empty($platform['setting'])) continue;
+
+					$rating_platforms[] = [
+						'platform_id' => $platform['id'],
+					];
+
+					$email_settings[] = $platform;
+				}
+
+				$insertArray = [
+					'send_invite_id'		=> $send_invite_id['send_invite_id'],
+					'invite_id'				=> $postArray['invite_id'],
+					'property_id'			=> $send_invite_id['property_id'],
+					'rating_platforms'		=> json_encode($rating_platforms),
+					'status'				=> 'Created'
+				];
+
+				$email_id = $this->add($insertArray, SEND_INVITES_EMAILS_TABLE);
+
+				if($email_id) {
+					$this->load->library('appmails');
+					if(!empty($email_settings) && $this->appmails->send_invites($email_settings, $inviteData, $email_id)) {
+						$this->update(['id' => $email_id], ['status' => 'Email Sent'], SEND_INVITES_EMAILS_TABLE);
+						$this->update(['id' => $send_invite_id['send_invite_id']], ['status' => 'Email Sent'], SEND_INVITES_TABLE);
+					}
+				}
+			}
+		}
+
+		return $trans_status;
+	}
 }

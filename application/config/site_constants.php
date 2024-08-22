@@ -26,3 +26,4 @@ define('RATING_PLATFORMS_TABLE', "rating_platforms");
 define('RATING_SETTINGS_TABLE', "rating_settings");
 define('INVITES_TABLE', "invites");
 define('SEND_INVITES_TABLE', "send_invites");
+define('SEND_INVITES_EMAILS_TABLE', "send_invites_emails");

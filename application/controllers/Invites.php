@@ -265,32 +265,22 @@ class Invites extends MY_Controller {
 
         if(!empty($this->input->post()) && $this->input->is_ajax_request()){
             $id = d_id($this->input->post('invite_id'));
-            $getData = $this->generalmodel->get($this->table, 'id', ['id' => $id]);
-            if(!empty($getData)){
+            $inviteData = $this->generalmodel->get($this->table, 'id, email, name', ['id' => $id]);
+            if(!empty($inviteData)){
                 $postArray = get_post_data();
-                $importArray = [];
 
                 if(!empty($postArray['property_ids']) && is_array($postArray['property_ids'])) {
-                    foreach ($postArray['property_ids'] as $property_id) {
-                        $importArray[] = [
-                            'invite_id'     => $postArray['invite_id'],
-                            'property_id'   => $property_id,
-                            'created_by'    => $this->user->id,
-                            'created_at'    => date('Y-m-d H:i:s'),
-                            'updated_by'    => $this->user->id,
-                            'updated_at'    => date('Y-m-d H:i:s')
-                        ];
-                    }
+                    $this->load->model('sent_invites_model');
+
+                    $id = $this->sent_invites_model->send_invites($postArray, $inviteData);
+    
+                    if($id){
+                        responseMsg(true, 'Invites has been created successfully!', true);
+                    } else {
+                        responseMsg(false, 'Something went wrong while creating invites!');
+                    }   
                 } else {
                     responseMsg(false, 'Properties are missing while creating invite!');
-                }
-                
-                $id = $this->generalmodel->insert_batch(SEND_INVITES_TABLE, $importArray);
-
-                if($id){
-                    responseMsg(true, 'Invites has been created successfully!', true);
-                } else {
-                    responseMsg(false, 'Something went wrong while creating invites!');
                 }
             } else {
                 responseMsg(false, 'Invite details not found!');
