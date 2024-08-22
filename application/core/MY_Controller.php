@@ -92,7 +92,7 @@ class MY_Controller extends CI_Controller
 
     public function validate_mobile($mobile)
     {
-        if ($mobile === "") {
+        if (empty($mobile)) {
             return true;
         }
 
@@ -106,7 +106,7 @@ class MY_Controller extends CI_Controller
 
     public function validate_password($password)
     {
-        if ($password === "") {
+        if (empty($password)) {
             return true;
         }
 

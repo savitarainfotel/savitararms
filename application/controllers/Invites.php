@@ -274,6 +274,25 @@ class Invites extends MY_Controller {
             'errors' => [
                 'required' => "%s is required"
             ],
+        ],
+        [
+            'field' => 'mobile',
+            'label' => 'Mobile',
+            'rules' => 'numeric|callback_validate_mobile',
+            'errors' => [
+                'numeric' => "%s is invalid",
+                'exact_length' => "%s is invalid",
+            ],
+        ],
+        [
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'required|max_length[100]|valid_email',
+            'errors' => [
+                'required' => "%s is required",
+                'valid_email' => "%s is invalid",
+                'max_length' => "Max 100 chars allowed"
+            ],
         ]
     ];
 }
