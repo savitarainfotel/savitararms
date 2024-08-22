@@ -23,7 +23,7 @@
                         </tr>
                         <tr>
                             <td><b>Mobile</b></td>
-                            <td><?= $data['phone']; ?></td>
+                            <td><?= !empty($data['phone']) ? $data['phone'] : '-'; ?></td>
 
                             <td></td>
                             <td></td>
