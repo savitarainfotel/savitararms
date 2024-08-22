@@ -39,6 +39,16 @@
                 </a>
             </li>
             <?php endif ?>
+            <?php if(user_privilege_register(INVITES)): ?>
+            <li class="menu <?php echo activeNavigation(INVITES, ['index', 'create', 'view', 'edit'], 'menu_li'); ?>">
+                <a href="<?php echo site_url(INVITES); ?>" aria-expanded="<?php echo activeNavigation(INVITES, '', 'expanded'); ?>" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>Invites</span>
+                    </div>
+                </a>
+            </li>
+            <?php endif ?>
             <?php if(user_privilege_register(CLIENTS)): ?>
             <li class="menu <?php echo activeNavigation(CLIENTS, ['index', 'create', 'view', 'edit'], 'menu_li'); ?>">
                 <a href="<?php echo site_url(CLIENTS); ?>" aria-expanded="<?php echo activeNavigation(CLIENTS, '', 'expanded'); ?>" class="dropdown-toggle">

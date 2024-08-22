@@ -63,4 +63,31 @@
         </div>
     </div>
     <?php endif; ?>
+    <?php if(isset($invites)): ?>
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="widget widget-card-five">
+            <div class="widget-content">
+                <div class="account-box">
+                    <div class="info-box">
+                        <div class="icon">
+                            <span>
+                                <?= img('assets/images/letter.png'); ?>
+                            </span>
+                        </div>
+                        <div class="balance-info">
+                            <h6>Total Invites</h6>
+                            <p>
+                                <?= number_format($invites); ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-bottom-section">
+                        <div></div>
+                        <?= anchor('invites', 'View All'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>

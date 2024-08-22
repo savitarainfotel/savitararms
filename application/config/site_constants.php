@@ -10,6 +10,7 @@ define('CLIENTS', "users");
 define('USERS', "users");
 define('USER_TYPES', "user_types");
 define('PROPERTIES', "properties");
+define('INVITES', "invites");
 
 define('USERS_TABLE', "users");
 define('USER_TYPES_TABLE', "user_types");
@@ -23,3 +24,4 @@ define('GENERAL_SETTINGS_TABLE', "general_settings");
 define('PROPERTIES_TABLE', "properties");
 define('RATING_PLATFORMS_TABLE', "rating_platforms");
 define('RATING_SETTINGS_TABLE', "rating_settings");
+define('INVITES_TABLE', "invites");

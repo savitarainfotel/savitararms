@@ -8,9 +8,11 @@
                     <div class="col-xl-6 col-md-6 col-sm-6 col-6">
                         <h4> <?php echo $title; ?> </h4>
                     </div>
+                    <?php if(user_privilege_register(PROPERTIES, 'create')): ?>
                     <div class="col-xl-6 col-md-6 col-sm-6 col-6">
                         <a href="<?php echo site_url($this->redirect.'/create'); ?>" class="btn btn-primary m-2 float-end"><i class="far fa-plus"></i> Add New Property</a>
                     </div>
+                    <?php endif ?>
                 </div>
             </div>
             <div class="widget-content widget-content-area">

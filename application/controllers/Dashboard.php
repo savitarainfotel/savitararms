@@ -15,6 +15,11 @@ class Dashboard extends MY_Controller {
 			$data['properties'] = $this->properties_model->count();
 		}
 
+		if(user_privilege_register(INVITES)) {
+			$this->load->model('invites_model');
+			$data['invites'] = $this->invites_model->count();
+		}
+
 		//!Breadcrumbs
 		$this->breadcrumb->add('Home', site_url());
 		$this->breadcrumb->add('Dashboard', site_url());
