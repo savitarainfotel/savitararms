@@ -15,7 +15,7 @@ class MY_Controller extends CI_Controller
 
         $currentController = strtolower($this->router->fetch_class());
 
-        if(in_array($currentController, ['login', 'forgot_password'])) {
+        if(in_array($currentController, ['login', 'forgot_password', 'user_ratings'])) {
             if ($this->session->auth) return redirect('dashboard');
         } else {
             if (!$this->session->auth) return redirect('auth/login');
