@@ -183,13 +183,35 @@ class Properties extends MY_Controller {
 
             $postArray = get_post_data();
 
-            $u_id = $this->generalmodel->update(['id' => $id], $postArray, $this->table);
+            if(!empty($postArray['settings'])) {
+                foreach($postArray['settings'] as $rating_platform_id => $setting) {
+                    $where = $settingsArray = [
+                        'property_id' => $id,
+                    	'rating_platform_id' => d_id($rating_platform_id)
+                    ];
 
-            if($u_id){
-                responseMsg(true, 'Rating settings has been updated successfully!', true);
+                    $property_id = $this->generalmodel->get(RATING_SETTINGS_TABLE, 'property_id', $settingsArray);
+
+                    $settingsArray['status'] = !empty($setting['status']) ? $setting['status'] : 0;
+                    $settingsArray['min_rating'] = $setting['min_rating'];
+                    $settingsArray['rating_url'] = $setting['rating_url'];
+
+                    if($property_id) {
+                        $u_id = $this->generalmodel->update($where, $settingsArray, RATING_SETTINGS_TABLE);
+                    } else {
+                        $u_id = $this->generalmodel->add($settingsArray, RATING_SETTINGS_TABLE);
+                    }
+                }
+
+                if(!empty($u_id)){
+                    responseMsg(true, 'Rating settings has been updated successfully!', true);
+                } else {
+                    responseMsg(false, 'Something went wrong while updating rating settings!');
+                }
             } else {
-                responseMsg(false, 'Something went wrong while updating rating settings!');
+                responseMsg(false, 'Params are missing!');
             }
+
         } else{
             if(!$data['data']) {
                 flashMsg('Property not found!', $this->redirect);
@@ -198,6 +220,7 @@ class Properties extends MY_Controller {
             $data['title'] = 'Rating settings';
             $data['pageTitle'] = 'Properties';
             $data['validate'] = true;
+            $data['rating_platforms'] = $this->generalmodel->getRatingPlatforms($id);
 
             //!Breadcrumbs
             $this->breadcrumb->add('Home', site_url());

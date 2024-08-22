@@ -21,3 +21,5 @@ define('EMAIL_LOGS_TABLE', "email_logs");
 define('EMAIL_TEMPLATE_TABLE', "email_template");
 define('GENERAL_SETTINGS_TABLE', "general_settings");
 define('PROPERTIES_TABLE', "properties");
+define('RATING_PLATFORMS_TABLE', "rating_platforms");
+define('RATING_SETTINGS_TABLE', "rating_settings");

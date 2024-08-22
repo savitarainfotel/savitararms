@@ -61,4 +61,28 @@ class Generalmodel extends MY_Model
 
         return $this->db->get(USERS_TABLE.' AS u')->result_array();
     }
+
+    public function getRatingPlatforms($property_id = null, $status = null) {
+        $this->db->select("rp.id, rp.platform, rp.logo")
+                 ->where('rp.is_delete', 0);
+
+        if($property_id){
+            $platforms = array_map(function($platform) use ($property_id, $status) {
+                $this->db->select("rs.status, rs.min_rating, rs.rating_url")
+                                                ->where('rs.property_id', $property_id)
+                                                ->where('rs.rating_platform_id', $platform['id']);
+
+                if($status) {
+                    $this->db->where('rs.status', $status);
+                }
+
+                $platform['setting'] = $this->db->get(RATING_SETTINGS_TABLE.' AS rs')->row_array();
+                return $platform;
+            }, $this->db->get(RATING_PLATFORMS_TABLE.' AS rp')->result_array());
+        } else {
+            $platforms = $this->db->get(RATING_PLATFORMS_TABLE.' AS rp')->result_array();
+        }
+
+        return $platforms;
+    }
 }
