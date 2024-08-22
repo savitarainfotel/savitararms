@@ -82,6 +82,9 @@ class Invites extends MY_Controller {
         $data['title'] = 'View Invite';
         $data['pageTitle'] = 'Invites';
         $data['validate'] = true;
+        $data['properties'] = $this->generalmodel->getProperties($data['data']['client_id']);
+        $data['datatables'] = true;
+        $data['datatable'] = "$this->redirect/get-invites";
 
         //!Breadcrumbs
         $this->breadcrumb->add('Home', site_url());
@@ -255,6 +258,79 @@ class Invites extends MY_Controller {
         } else {
             responseMsg(false, 'Parameter missing!');
         }
+    }
+
+    public function send_invites(){
+        checkAccess(INVITES, 'send_invites');
+
+        if(!empty($this->input->post()) && $this->input->is_ajax_request()){
+            $id = d_id($this->input->post('invite_id'));
+            $getData = $this->generalmodel->get($this->table, 'id', ['id' => $id]);
+            if(!empty($getData)){
+                $postArray = get_post_data();
+                $importArray = [];
+
+                if(!empty($postArray['property_ids']) && is_array($postArray['property_ids'])) {
+                    foreach ($postArray['property_ids'] as $property_id) {
+                        $importArray[] = [
+                            'invite_id'     => $postArray['invite_id'],
+                            'property_id'   => $property_id,
+                            'created_by'    => $this->user->id,
+                            'created_at'    => date('Y-m-d H:i:s'),
+                            'updated_by'    => $this->user->id,
+                            'updated_at'    => date('Y-m-d H:i:s')
+                        ];
+                    }
+                } else {
+                    responseMsg(false, 'Properties are missing while creating invite!');
+                }
+                
+                $id = $this->generalmodel->insert_batch(SEND_INVITES_TABLE, $importArray);
+
+                if($id){
+                    responseMsg(true, 'Invites has been created successfully!', true);
+                } else {
+                    responseMsg(false, 'Something went wrong while creating invites!');
+                }
+            } else {
+                responseMsg(false, 'Invite details not found!');
+            }
+        } else {
+            responseMsg(false, 'Parameter missing!');
+        }
+    }
+
+    public function get_invites()
+    {
+        check_ajax();
+        checkAccess(INVITES, 'send_invites');
+
+        $this->load->model('sent_invites_model', 'data');
+
+        $fetch_data = $this->data->make_datatables();
+        $data = [];
+        $sr = $this->input->post('start') + 1;
+
+        foreach($fetch_data as $k => $record)
+        {
+            $sub_array = [];
+            $sub_array[] = $sr++;
+
+            $sub_array[] = anchor($this->redirect.'/view-sent-invite/'.e_id($record->id), $record->property_name, 'class="text-primary text-decoration"');
+            $sub_array[] = $record->status;
+            $sub_array[] = date('d-m-Y', strtotime($record->created_at));
+
+            $data[] = $sub_array;
+        }
+
+        $output = [
+            "draw"              => intval($this->input->post('draw')),  
+            "recordsTotal"      => $this->data->count(),
+            "recordsFiltered"   => $this->data->get_filtered_data(),
+            "data"              => $data
+        ];
+
+        die(json_encode($output));
     }
 
     protected $validate = [

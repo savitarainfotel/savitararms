@@ -373,12 +373,14 @@ function get_post_data()
                     $postArray['password_salt'] = $hp['salt'];
                     $postArray['password'] = $hp['hashedPassword'];
                 }
-            } else if(in_array($k, ['type', 'nationality', 'departure_from_country', 'departure_to_country', 'lead_id', 'client_id'])) {
+            } else if(in_array($k, ['type', 'nationality', 'departure_from_country', 'departure_to_country', 'lead_id', 'client_id', 'invite_id'])) {
                 $postArray[$k] = !empty($v) ? d_id($v) : 0;
             } else if(in_array($k, ['date_of_birth', 'departure_from', 'departure_to', 'next_follow_date'])) {
                 $postArray[$k] = !empty($v) ? date('Y-m-d', strtotime(str_replace('/', '-', $v))) : '';
             } else if(in_array($k, ['assigned_to'])) {
                 $postArray[$k] = !empty($v) ? implode(',', array_map('d_id', $v)) : '';
+            } else if(in_array($k, ['property_ids'])) {
+                $postArray[$k] = !empty($v) ? array_map('d_id', $v) : '';
             } else if(in_array($k, ['passenger_details', 'card_details', 'other_services', 'type_of_cab', 'room_type'])) {
                 $postArray[$k] = !empty($v) ? json_encode($v) : '';
             } else {

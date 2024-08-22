@@ -25,3 +25,4 @@ define('PROPERTIES_TABLE', "properties");
 define('RATING_PLATFORMS_TABLE', "rating_platforms");
 define('RATING_SETTINGS_TABLE', "rating_settings");
 define('INVITES_TABLE', "invites");
+define('SEND_INVITES_TABLE', "send_invites");

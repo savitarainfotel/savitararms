@@ -85,4 +85,20 @@ class Generalmodel extends MY_Model
 
         return $platforms;
     }
+
+    public function getProperties($client_id = null) {
+        $this->db->select("p.id, p.name, p.hosted_on");
+
+        if(!$this->user->is_admin && !$this->user->is_super_admin) {
+            $this->db->where('p.client_id', $this->user->id);
+        }
+
+        if($client_id) {
+            $this->db->where('p.client_id', $client_id);
+        }
+
+        $this->db->where('p.is_delete', 0);
+
+        return $this->db->get(PROPERTIES_TABLE.' AS p')->result_array();
+    }
 }

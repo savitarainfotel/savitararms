@@ -317,6 +317,7 @@ if($('.datatable').length > 0) {
                 type: "POST",
                 data: function(data) {
                     data.csrf_token = $("input[name='csrf_hash']").val();
+                    data.invite_id = $("[name='invite_id']").val();
                     data.export = $("input[name='data-export']").val();
                 },
                 complete: function(response) {
