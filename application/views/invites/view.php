@@ -71,6 +71,9 @@
                                 <th class="no-content">#</th>
                                 <th>Property</th>
                                 <th>Status</th>
+                                <th>Platform</th>
+                                <th>Rating</th>
+                                <th>Comments</th>
                                 <th>Created on</th>
                             </tr>
                         </thead>
@@ -79,6 +82,9 @@
                                 <th>#</th>
                                 <th>Property</th>
                                 <th>Status</th>
+                                <th>Platform</th>
+                                <th>Rating</th>
+                                <th>Comments</th>
                                 <th>Created on</th>
                             </tr>
                         </tfoot>

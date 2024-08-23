@@ -322,6 +322,7 @@ if($('.datatable').length > 0) {
                 },
                 complete: function(response) {
                     $('.bs-tooltip').tooltip();
+                    $('.bs-popover').popover();
                     
                     if(response.responseJSON && response.responseJSON.html) {
                         const isHTML = RegExp.prototype.test.bind(/(<([^>]+)>)/i);                    

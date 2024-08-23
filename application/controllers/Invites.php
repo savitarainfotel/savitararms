@@ -306,12 +306,11 @@ class Invites extends MY_Controller {
             $sub_array = [];
             $sub_array[] = $sr++;
 
-            $sub_array[] =  form_open($this->redirect.'/view-sent-invite/'.e_id($record->id), 'method="GET"').
-                                    '<a class="bs-tooltips text-primary text-decoration btn-modal-item" data-modal-title="Rating given" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="View Rating given" aria-label="View Rating given" data-bs-original-title="View Rating given" href="javascript:;">
-                                        '.$record->property_name.'
-                                    </a>'.
-                            form_close();
+            $sub_array[] =  $record->property_name;
             $sub_array[] = status($record->status);
+            $sub_array[] = $record->platform ?? '-';
+            $sub_array[] = $record->rating ?? '-';
+            $sub_array[] = $record->comments ? '<a href="javascript:;" class="bs-popover" data-bs-container="body" data-bs-content="'.$record->comments.'">'.(substr($record->comments, 0, 20) . '...').'</a>' : '-';
             $sub_array[] = date('d-m-Y', strtotime($record->created_at));
 
             $data[] = $sub_array;
