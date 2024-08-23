@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php 
+    defined('BASEPATH') OR exit('No direct script access allowed');
+    $currentController = strtolower($this->router->fetch_class());
+?>
 <!doctype html>
 <html>
     <head>
@@ -31,7 +34,7 @@
         <?= link_tag('assets/src/assets/css/light/pages/error/error.css'.ASSET_VERSION); ?>
         <?= link_tag('assets/src/assets/css/dark/pages/error/error.css'.ASSET_VERSION); ?>
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <?php if(!$this->session->auth) {
+        <?php if(in_array($currentController, ['login', 'forgot_password', 'user_ratings'])) {
             echo link_tag('assets/src/assets/css/light/authentication/auth-boxed.css'.ASSET_VERSION);
             echo link_tag('assets/src/assets/css/dark/authentication/auth-boxed.css'.ASSET_VERSION);
         } else {
@@ -78,7 +81,7 @@
         </div>
         <!--  END LOADER -->
 
-        <?php if($this->session->auth) {
+        <?php if(!in_array($currentController, ['login', 'forgot_password', 'user_ratings'])) {
             $this->load->view('includes/header');
             echo '<div class="main-container" id="container">
                     <div class="overlay"></div>
@@ -92,7 +95,7 @@
         
         echo $contents;
         
-        if($this->session->auth) { ?>
+        if(!in_array($currentController, ['login', 'forgot_password', 'user_ratings'])) { ?>
                             <div class="footer-wrapper">
                                 <div class="footer-section f-section-1">
                                     <p class="">Copyright © <?php echo date('Y'); ?> <a target="_blank" href="<?= site_url(); ?>"><?= APP_NAME; ?></a>, All rights reserved.</p>
@@ -126,7 +129,7 @@
         <?= script("assets/src/bootstrap/js/bootstrap.bundle.min.js".ASSET_VERSION); ?>
         <?= script("assets/src/plugins/src/notification/snackbar/snackbar.min.js".ASSET_VERSION); ?>
 
-        <?php if($this->session->auth) {
+        <?php if(!in_array($currentController, ['login', 'forgot_password', 'user_ratings'])) {
             echo script("assets/src/plugins/src/global/vendors.min.js".ASSET_VERSION);
             echo script("assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js".ASSET_VERSION);
             echo script("assets/src/plugins/src/mousetrap/mousetrap.min.js".ASSET_VERSION);

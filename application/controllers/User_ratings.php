@@ -3,45 +3,43 @@
 /**
  * 
  */
-class User_ratings extends MY_Controller
+class User_ratings extends CI_Controller
 {
-    protected $table = SEND_INVITES_EMAILS_TABLE;
+    public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('generalmodel');
+	}
 
-    public function index($rating_platform_id, $send_invites_id)
+    protected $table = SEND_INVITES_TABLE;
+
+    public function index($send_invites_id, $rating_platform_id = null)
     {
-        $rating_platform_id = d_id($rating_platform_id);
         $send_invites_id = d_id($send_invites_id);
 
-        $inviteData = $this->generalmodel->get($this->table, 'rating_platforms, status, send_invite_id, property_id', ['id' => $send_invites_id, 'status' => 'Email Sent', 'is_delete' => 0]);
+        $inviteData = $this->generalmodel->get($this->table, 'status, property_id', ['id' => $send_invites_id, 'status' => 'Email Sent', 'is_delete' => 0]);
+        $platformData = [];
 
-        if($inviteData) {
+        if($rating_platform_id && $inviteData) {
+            $rating_platform_id = d_id($rating_platform_id);
             $platformData = $this->generalmodel->get(RATING_SETTINGS_TABLE, 'min_rating, rating_url', ['property_id' => $inviteData['property_id'], 'rating_platform_id' => $rating_platform_id, 'status' => 1]);
         }
 
         if($this->input->is_ajax_request()) {
-            if(empty($inviteData) || empty($inviteData)) {
+            if(empty($inviteData) || empty($platformData)) {
                 responseMsg(false, 'Link Expired!', true);
             }
 
-            $rating_platforms = json_decode($inviteData['rating_platforms'], TRUE);
-
-            foreach ($rating_platforms as $k => $platform) {
-                if($platform['platform_id'] === $rating_platform_id) {
-                    $rating_platforms[$k]['rating'] = $this->input->post('rating');
-                    $rating_platforms[$k]['comments'] = $this->input->post('comments');
-                }
-            }
-
             $update = [
-                'rating_platforms'  => json_encode($rating_platforms),
-                'status'            => 'Rating given'
+                'rating_platform_id'    => $rating_platform_id,
+                'rating'                => $this->input->post('rating'),
+                'comments'              => $this->input->post('comments'),
+                'status'                => 'Rating given'
             ];
 
             $redirect = $this->input->post('rating') > $platformData['min_rating'] ? $platformData['rating_url'] : site_url('user-ratings/thank-you');
 
-            $this->load->model('sent_invites_model');
-
-            if ($this->sent_invites_model->user_ratings($update, $send_invites_id, $inviteData)) {
+            if ($this->generalmodel->update(['id' => $send_invites_id], $update, $this->table)) {
                 $response = ['error' => false, 'message' => "We value your feedback! Thank you!", "redirect" => $redirect];
             }else{
                 $response = ['error' => true, 'message' => 'Some error occurs while sending email. Try again.'];
@@ -49,7 +47,7 @@ class User_ratings extends MY_Controller
 
             die(json_encode($response));
         } else{
-            if(empty($inviteData) || empty($inviteData)) {
+            if(empty($inviteData)) {
                 return $this->link_expired();
             }
             $data['title'] = 'User ratings';
@@ -57,7 +55,12 @@ class User_ratings extends MY_Controller
             $data['inviteData'] = $inviteData;
             $data['platformData'] = $platformData;
 
-            return $this->template->load('template', 'user_ratings/user_ratings', $data);
+            if(!empty($platformData)) {
+                return $this->template->load('template', 'user_ratings/user_ratings', $data);
+            } else {
+                $data['rating_platforms'] = $this->generalmodel->getRatingPlatforms($inviteData['property_id'], 1);
+                return $this->template->load('template', 'user_ratings/home', $data);
+            }
         }
     }
 

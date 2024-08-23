@@ -25,23 +25,18 @@ class Appmails {
         return $this->send_email($user['email'], $data, $subject);
     }
 
-    public function send_invites(Array &$email_settings, Array &$inviteData, Int $email_id)
+    public function send_invites(Array &$inviteData, Int $email_id)
     {
         $email_template = $this->ci->generalmodel->get(EMAIL_TEMPLATE_TABLE, 'subject, template_content', ['name' => 'feedback-invites']);
         $subject = !empty($email_template['subject']) ? $email_template['subject'] : "We Value Your Feedback! Share Your Experience!";
 
         $content = $email_template['template_content'];
 
-        $feedback_links = '';
-
-        foreach ($email_settings as $email_setting) {
-            $link = site_url('user-ratings/'.e_id($email_setting['id'])).'/'.e_id($email_id);
-            $feedback_links .= '<strong>Share Your Experience on '.$email_setting['platform'].' : </strong><a href="'.$link.'">Click</a><br />';
-        }
+        $feedback_link = '<strong>Share Your Experience : </strong><a href="'.site_url('user-ratings/'.e_id($email_id)).'">Click</a><br />';
 
         $content =  str_replace('[Client]', $inviteData['name'], $content);
         $content =  str_replace('[Email]', $inviteData['email'], $content);
-        $content =  str_replace('[Feedback Links]', $feedback_links, $content);
+        $content =  str_replace('[Feedback Links]', $feedback_link, $content);
 
         $data['content'] = $content;
 

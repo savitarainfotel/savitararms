@@ -290,22 +290,6 @@ class Invites extends MY_Controller {
         }
     }
 
-    public function view_sent_invite($invite_id){
-        checkAccess(INVITES, 'send_invites');
-
-        if(!empty($invite_id) && $this->input->is_ajax_request()){
-            $id = d_id($invite_id);
-            $inviteData = $this->generalmodel->get(SEND_INVITES_EMAILS_TABLE, 'rating_platforms, status', ['send_invite_id' => $id]);
-            if(!empty($inviteData)){
-                responseMsg(true, '', '', '', json_encode($inviteData));
-            } else {
-                responseMsg(false, 'Invite details not found!');
-            }
-        } else {
-            responseMsg(false, 'Parameter missing!');
-        }
-    }
-
     public function get_invites()
     {
         check_ajax();

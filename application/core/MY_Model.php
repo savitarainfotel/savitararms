@@ -8,9 +8,9 @@ class MY_Model extends CI_Model
 	public function add($post, $table)
 	{
 		
-		$post['created_by'] = $this->user ? $this->user->id : 0;
+		$post['created_by'] = !empty($this->user) ? $this->user->id : 0;
 		$post['created_at'] = date('Y-m-d H:i:s');
-		$post['updated_by'] = $this->user ? $this->user->id : 0;
+		$post['updated_by'] = !empty($this->user) ? $this->user->id : 0;
 		$post['updated_at'] = date('Y-m-d H:i:s');
 
 		$post = array_intersect_key($post, array_flip($this->db->list_fields($table)));
@@ -68,7 +68,7 @@ class MY_Model extends CI_Model
 
 	public function update($where, $post, $table)
 	{
-		$post['updated_by'] = $this->user ? $this->user->id : 0;
+		$post['updated_by'] = !empty($this->user) ? $this->user->id : 0;
 		$post['updated_at'] = date('Y-m-d H:i:s');
 
 		$post = array_intersect_key($post, array_flip($this->db->list_fields($table)));
