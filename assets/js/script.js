@@ -881,3 +881,15 @@ $(document).on("click", ".quotation-pdf-preview", function(){
         });
     }
 });
+
+$(document).on('change', 'input[name="rating"]', function(){
+    const userRating = parseInt($(this).val());
+
+    if(userRating > minRating) {
+        $('textarea[name=comments]').val("");
+        $('.comment-section').addClass('d-none');
+        $(this).closest('form').submit();
+    } else {
+        $('.comment-section').removeClass('d-none');
+    }
+});

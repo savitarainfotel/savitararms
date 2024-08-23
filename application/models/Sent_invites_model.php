@@ -86,4 +86,16 @@ class Sent_invites_model extends MY_Model {
 
 		return $trans_status;
 	}
+
+	public function user_ratings(&$update, &$send_invites_id, &$inviteData)
+	{
+		$this->db->trans_start();
+
+		$this->update(['id' => $send_invites_id], $update, SEND_INVITES_EMAILS_TABLE);
+		$this->update(['id' => $inviteData['send_invite_id']], $update, SEND_INVITES_TABLE);
+
+		$this->db->trans_complete();
+
+		return $this->db->trans_status();
+	}
 }
