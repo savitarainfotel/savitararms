@@ -106,7 +106,7 @@
     }
 
     .auth-container {
-        background-image: url(https://www.toptal.com/designers/subtlepatterns/uploads/email-pattern.png);
+        background-image: url(<?= base_url('assets/images/email-pattern.png') ?>);
         background-repeat: repeat;
         background-size: auto;
     }
