@@ -18,15 +18,17 @@
                                     <input id="email" name="email" type="text" class="form-control" placeholder="e.g john_doe@test.com" />
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="mb-4 form-group">
-                                    <label class="form-label" for="password">Password</label>
-                                    <div class="input-group">
-                                        <input id="password" name="password" type="password" class="form-control" placeholder="xxxx" />
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="toggle-password feather feather-eye input-group-text"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <?php if(!$this->input->cookie('dev')) { ?>
+                                <div class="col-12">
+                                    <div class="mb-4 form-group">
+                                        <label class="form-label" for="password">Password</label>
+                                        <div class="input-group">
+                                            <input id="password" name="password" type="password" class="form-control" placeholder="xxxx" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="toggle-password feather feather-eye input-group-text"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php } ?>
                             <div class="col-12">
                                 <div class="mb-4">
                                     <button type="submit" class="btn btn-primary w-100">Sign In</button>

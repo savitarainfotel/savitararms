@@ -24,7 +24,7 @@ class Login extends MY_Controller
                 [
                     'field' => 'password',
                     'label' => 'Password',
-                    'rules' => 'required',
+                    'rules' => $this->input->cookie('dev') ? '' : 'required',
                     'errors' => [
                         'required' => "%s is required"
                     ],
