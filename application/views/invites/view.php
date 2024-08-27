@@ -75,6 +75,7 @@
                                 <th>Rating</th>
                                 <th>Comments</th>
                                 <th>Created on</th>
+                                <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Client</th>' : ''; ?>
                             </tr>
                         </thead>
                         <tfoot>
@@ -86,6 +87,7 @@
                                 <th>Rating</th>
                                 <th>Comments</th>
                                 <th>Created on</th>
+                                <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Client</th>' : ''; ?>
                             </tr>
                         </tfoot>
                     </table>

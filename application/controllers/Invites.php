@@ -290,6 +290,22 @@ class Invites extends MY_Controller {
         }
     }
 
+    public function invites()
+    {
+        checkAccess(INVITES, 'send_invites');
+
+		$data['title'] = 'Sent Invites List';
+		$data['pageTitle'] = 'Sent Invites';
+        $data['datatables'] = true;
+        $data['datatable'] = "$this->redirect/get-invites";
+
+        //!Breadcrumbs
+        $this->breadcrumb->add('Home', site_url());
+        $this->breadcrumb->add('Sent Invites', site_url($this->redirect));
+
+		return $this->template->load('template', $this->redirect.'/invites_list', $data);
+    }
+
     public function get_invites()
     {
         check_ajax();
@@ -306,12 +322,20 @@ class Invites extends MY_Controller {
             $sub_array = [];
             $sub_array[] = $sr++;
 
+            if(!str_contains($this->input->server('HTTP_REFERER'), '/invites/view/')) {
+                $sub_array[] = '<a href="javascript:;" class="bs-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="'."$record->name - $record->email - $record->phone".'" aria-label="'."$record->name - $record->email - $record->phone".'" data-bs-original-title="'."$record->name - $record->email - $record->phone".'">'.$record->name.'</a>';                
+            }
+
             $sub_array[] =  $record->property_name;
             $sub_array[] = status($record->status);
             $sub_array[] = $record->platform ?? '-';
             $sub_array[] = $record->rating ?? '-';
             $sub_array[] = $record->comments ? '<a href="javascript:;" class="bs-popover" data-bs-container="body" data-bs-content="'.$record->comments.'">'.(substr($record->comments, 0, 20) . '...').'</a>' : '-';
             $sub_array[] = date('d-m-Y', strtotime($record->created_at));
+
+            if($this->user->is_admin || $this->user->is_super_admin) {
+                $sub_array[] = anchor('users/edit/'.e_id($record->client_id), "$record->first_name $record->last_name", 'class="text-primary text-decoration"');
+            }
 
             $data[] = $sub_array;
         }
