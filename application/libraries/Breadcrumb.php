@@ -25,10 +25,10 @@ class Breadcrumb {
     function add($title, $href) {
         if (!$title OR !$href)
             return;
-        
+
         $this->breadcrumbs[] = array(
             'title' => $title,
-            'href' => $href
+            'href' => site_url() === $href ? $href.'dashboard' : $href
         );
     }
     
