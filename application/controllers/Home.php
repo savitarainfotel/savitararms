@@ -8,6 +8,13 @@ class Home extends CI_Controller {
 		return $this->template->load('front-end/template', 'front-end/home', $data);
 	}
 
+	public function error_404()
+	{
+		$data['title'] = 'Error 404';
+
+		return $this->template->load('front-end/template', 'front-end/error_404', $data);
+	}
+
 	public function logout()
 	{
 		$this->session->unset_userdata(array_keys($this->session->userdata()));

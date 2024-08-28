@@ -19,13 +19,13 @@
 <body>
     <div class="navbar" id="navbar">
         <div class="logo">
-            <?= img('assets/images/logo.png', '', 'width="128"'); ?>
+            <?= anchor('', img('assets/images/logo.png', '', 'width="128"')); ?>
         </div>
         <div class="nav-links">
-            <a href="javascript:;">Home</a>
-            <a href="javascript:;">About</a>
-            <a href="javascript:;">Services</a>
-            <a href="javascript:;">Contact</a>
+            <?= anchor('', 'Home'); ?>
+            <?= anchor('', 'About'); ?>
+            <?= anchor('', 'Services'); ?>
+            <?= anchor('', 'Contact'); ?>
         </div>
     </div>
 
