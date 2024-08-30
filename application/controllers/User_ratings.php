@@ -54,8 +54,9 @@ class User_ratings extends CI_Controller
             $data['validate'] = true;
             $data['inviteData'] = $inviteData;
             $data['platformData'] = $platformData;
-
+            
             if(!empty($platformData)) {
+                $data['rating_platform'] = $this->generalmodel->get(RATING_PLATFORMS_TABLE, 'logo', ['id' => $rating_platform_id]);    
                 return $this->template->load('front-end/template', 'user_ratings/user_ratings', $data);
             } else {
                 $data['rating_platforms'] = $this->generalmodel->getRatingPlatforms($inviteData['property_id'], 1);

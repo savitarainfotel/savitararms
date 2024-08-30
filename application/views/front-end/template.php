@@ -40,15 +40,15 @@ $currentController = strtolower($this->router->fetch_class());
     <div class="preloader">
         <span class="loader"></span>
     </div>
-
+    <?php if(!in_array($currentController, ['user_ratings'])): ?>
     <!--header-section start-->
     <header class="header-section index ">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar navbar-expand-xl nav-shadow" id="#navbar">
-                        <?= anchor('', img('assets/images/logo2.png', '', 'class="logo" alt="logo"'), 'class="navbar-brand"'); ?>
-                        <?php if(!in_array($currentController, ['user_ratings'])): ?>
+                        
+                        <?= anchor('', img('assets/images/logo2.png', '', 'class="logo" alt="logo"'), 'class="navbar-brand"'); ?>                        
                         <a class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <i class="bi bi-list"></i>
                         </a>
@@ -62,7 +62,6 @@ $currentController = strtolower($this->router->fetch_class());
                                 </div>
                             </div>
                         </div>
-                        <?php endif; ?>
                     </nav>
                 </div>
             </div>
@@ -113,6 +112,7 @@ $currentController = strtolower($this->router->fetch_class());
         </div>
     </div>
     <!-- header-section end -->
+    <?php endif; ?>
 
     <?= $contents; ?>
     <?php if(!in_array($currentController, ['user_ratings'])): ?>
