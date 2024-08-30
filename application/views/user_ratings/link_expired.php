@@ -30,7 +30,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-9 col-xxl-8">
                 <div class="error-page__thumb wow fadeInDown" data-wow-duration="0.8s">
-                    <?= img("assets/images/expired.png"); ?>
+                    <?= img("assets/images/expired.png", '', 'width="30%"'); ?>
                 </div>
             </div>
             <div class="col-12 col-md-8 col-xxl-6">

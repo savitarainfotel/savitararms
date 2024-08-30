@@ -30,7 +30,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-9 col-xxl-8">
                 <div class="error-page__thumb wow fadeInDown" data-wow-duration="0.8s">
-                    <?= img("assets/images/good-feedback.png"); ?>
+                    <?= img("assets/images/good-feedback.png", '', 'width="30%"'); ?>
                 </div>
             </div>
             <div class="col-12 col-md-8 col-xxl-6">
@@ -40,7 +40,7 @@
                     <p>
                         Your feedback is valuable to us and helps us improve our services. Please share your thoughts by selecting the appropriate rating below. We appreciate your input!
                     </p>
-                    <?= anchor('', 'Back To Home<i class="bi bi-arrow-up-right"></i><span></span>', 'class="btn_theme btn_theme_active mt_40  wow fadeInUp"'); ?>
+                    <?= anchor('', 'Back To Home<i class="bi bi-arrow-up-right"></i><span></span>', 'class="btn_theme btn_theme_active mt_40"'); ?>
                 </div>
             </div>
         </div>

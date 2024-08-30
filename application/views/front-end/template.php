@@ -148,7 +148,7 @@ $currentController = strtolower($this->router->fetch_class());
     <?php endif ?>
 
     <!-- scroll to top -->
-    <a href="javascript:;" class="scrollToTop"><i class="bi bi-chevron-double-up"></i></a>
+    <a href="#" class="scrollToTop"><i class="bi bi-chevron-double-up"></i></a>
 
     <?= script("assets/vendor/jquery/jquery-3.6.3.min.js".ASSET_VERSION); ?>
     <!-- bootstrap five js -->
