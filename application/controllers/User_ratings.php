@@ -56,10 +56,10 @@ class User_ratings extends CI_Controller
             $data['platformData'] = $platformData;
 
             if(!empty($platformData)) {
-                return $this->template->load('template', 'user_ratings/user_ratings', $data);
+                return $this->template->load('front-end/template', 'user_ratings/user_ratings', $data);
             } else {
                 $data['rating_platforms'] = $this->generalmodel->getRatingPlatforms($inviteData['property_id'], 1);
-                return $this->template->load('template', 'user_ratings/home', $data);
+                return $this->template->load('front-end/template', 'user_ratings/home', $data);
             }
         }
     }
@@ -69,7 +69,7 @@ class User_ratings extends CI_Controller
         $data['title'] = 'User ratings | Link Expired';
         $data['errorPage'] = true;
 
-        return $this->template->load('template', 'user_ratings/link_expired', $data);
+        return $this->template->load('front-end/template', 'user_ratings/link_expired', $data);
     }
 
     public function thank_you()
@@ -77,6 +77,6 @@ class User_ratings extends CI_Controller
         $data['title'] = 'User ratings | Thank you';
         $data['errorPage'] = true;
 
-        return $this->template->load('template', 'user_ratings/thank_you', $data);
+        return $this->template->load('front-end/template', 'user_ratings/thank_you', $data);
     }
 }
