@@ -14,6 +14,12 @@ class Home extends CI_Controller {
 
 		return $this->template->load('front-end/template', 'front-end/error_404', $data);
 	}
+	public function book_now()
+	{
+		$data['title'] = 'Book Now';
+
+		return $this->template->load('front-end/template', 'front-end/book_now', $data);
+	}
 
 	public function logout()
 	{

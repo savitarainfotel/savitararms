@@ -5,7 +5,7 @@
         <?= img('assets/images/hero_vector_dollar.png'); ?>
         <?= img('assets/images/hero_vector_message.png'); ?>
         <?= img('assets/images/hero_vector_dollar.png'); ?>
-        <?= img('assets/images/hero_vector_setting.png'); ?>
+        <?= img('assets/images/hero_vector_dollar.png'); ?>
         <?= img('assets/images/hero_vector_arrow.png'); ?>
     </div>
     <div class="container">
@@ -13,21 +13,20 @@
             <div class="col-12 col-lg-6">
                 <div class="section__content">
                     <span class="section__content-sub-title headingFour wow fadeInDown" data-wow-duration="0.8s">
-                        <?= img('assets/images/title_vector.png'); ?> Compare and Choose the Best Loan
+                        <?= img('assets/images/title_vector.png'); ?> Reputation Management Software
                     </span>
-                    <h1 class="section__content-title display-3 wow fadeInUp" data-wow-duration="0.8s">Find the
+                    <h1 class="section__content-title display-3 wow fadeInUp" data-wow-duration="0.8s">Understand and manage your
                         <span class="word d-inline-flex">
-                            <span data-wow-duration="0.6s" class="letter wow fadeInDown">P</span>
-                            <span data-wow-duration="0.6s" data-wow-delay="0.1s" class="letter wow fadeInDown">e</span>
-                            <span data-wow-duration="0.6s" data-wow-delay="0.2s" class="letter wow fadeInDown">r</span>
-                            <span data-wow-duration="0.6s" data-wow-delay="0.3s" class="letter wow fadeInDown">f</span>
-                            <span data-wow-duration="0.6s" data-wow-delay="0.4s" class="letter wow fadeInDown">e</span>
-                            <span data-wow-duration="0.6s" data-wow-delay="0.5s" class="letter wow fadeInDown">c</span>
-                            <span data-wow-duration="0.6s" data-wow-delay="0.6s" class="letter wow fadeInDown">t</span>
+                            <span data-wow-duration="0.6s" class="letter wow fadeInDown">o</span>
+                            <span data-wow-duration="0.6s" data-wow-delay="0.2s" class="letter wow fadeInDown">n</span>
+                            <span data-wow-duration="0.6s" data-wow-delay="0.3s" class="letter wow fadeInDown">l</span>
+                            <span data-wow-duration="0.6s" data-wow-delay="0.4s" class="letter wow fadeInDown">i</span>
+                            <span data-wow-duration="0.6s" data-wow-delay="0.5s" class="letter wow fadeInDown">n</span>
+                            <span data-wow-duration="0.6s" data-wow-delay="0.6s" class="letter wow fadeInDown">e</span>
                         </span>
-                        Reputation management software
+                       reputation
                     </h1>
-                    <p class="section__content-text wow fadeInDown" data-wow-duration="0.8s">Welcome to <?= APP_NAME ?>, your trusted resource for reviews. Our dedicated team of experts analyzes various reviews</p>
+                    <p class="section__content-text wow fadeInDown" data-wow-duration="0.8s">Welcome to <?= APP_NAME ?> Your customers share their experiences on social media and online reviews. And your potential customers use those reviews to decide if they want to use your services and products</p>
                     <div class="btn-group mt_40 wow fadeInUp" data-wow-duration="0.8s">
                         <a href="javascript:;" class="btn_theme btn_theme_active">Contact us<i class="bi bi-arrow-up-right"></i><span></span></a>
                         <a href="javascript:;" class="btn_theme">About us<i class="bi bi-arrow-up-right"></i><span></span></a>
@@ -36,7 +35,7 @@
             </div>
             <div class="col-12 col-lg-6 col-xxl-5">
                 <div class="hero__thumb wow fadeInUp" data-wow-duration="0.8s">
-                    <?= img('assets/images/hero_img.png'); ?>
+                    <?= img('assets/images/hero-img.png'); ?>
                 </div>
             </div>
         </div>

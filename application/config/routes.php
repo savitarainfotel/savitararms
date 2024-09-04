@@ -8,3 +8,4 @@ $route['user-ratings/thank-you'] = 'user_ratings/thank_you';
 $route['user-ratings/(:any)(/?:any)'] = 'user_ratings/index/$1$2';
 $route['logout'] = 'home/logout';
 $route['change-password/(:any)'] = 'auth/login/change_password/$1';
+$route['book-now'] = 'home/book_now';

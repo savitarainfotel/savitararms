@@ -48,7 +48,7 @@ $currentController = strtolower($this->router->fetch_class());
                 <div class="col-12">
                     <nav class="navbar navbar-expand-xl nav-shadow" id="#navbar">
                         
-                        <?= anchor('', img('assets/images/logo2.png', '', 'class="logo" alt="logo"'), 'class="navbar-brand"'); ?>                        
+                        <?= anchor('', img('assets/images/logo/RMS_logo_dark.png', '', 'class="logo" alt="logo"'), 'class="navbar-brand"'); ?>                        
                         <a class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <i class="bi bi-list"></i>
                         </a>
@@ -58,6 +58,7 @@ $currentController = strtolower($this->router->fetch_class());
                                 <div class="nav-right d-none d-xl-block">
                                     <div class="nav-right__search">
                                         <?= anchor('auth/login', 'Sign In <i class="bi bi-arrow-up-right"></i><span></span>', 'class="btn_theme btn_theme_active"'); ?>
+                                        <?= anchor('home/book_now', 'Book Now <i class="bi bi-arrow-up-right"></i><span></span>', 'class="btn_theme btn_theme_active"'); ?>
                                     </div>
                                 </div>
                             </div>
@@ -80,6 +81,9 @@ $currentController = strtolower($this->router->fetch_class());
                             </li>
                             <li class="menu_item">
                                 <?= anchor('auth/login', 'Sign In', 'class="menu_link"'); ?>
+                            </li>
+                            <li>
+                                <?= anchor('home/book_now', 'Book Now', 'class="menu_link"'); ?>
                             </li>
                         </ul>
                     </div>
@@ -123,7 +127,7 @@ $currentController = strtolower($this->router->fetch_class());
                 <div class="col-12">
                     <div class="footer-secondary__content">
                         <div class="footer__logo">
-                            <?= anchor('', img('assets/images/logo.png', '', 'style="width: 200px; height: 80px;"')); ?>
+                            <?= anchor('', img('assets/images/logo/RMS_logo_light.png', '', )); ?>
                         </div>
                         <div class="social">
                             <a href="javascript:;" class="btn_theme social_box"><i class="bi bi-facebook"></i><span></span></a>
