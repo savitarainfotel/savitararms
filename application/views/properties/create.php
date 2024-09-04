@@ -53,6 +53,12 @@
                                     <input type="text" class="form-control f-required" id="hosted_on" name="hosted_on" value="<?= !empty($data['hosted_on']) ? $data['hosted_on'] : ''; ?>" required="" />
                                 </div>
                             </div>
+                            <div class="col-xl-12">
+                                <div class="form-group mb-4">
+                                    <label for="short_description">Short Description</label> <span class="text-danger">*</span>
+                                    <input type="text" class="form-control f-required" id="short_description" name="short_description" value="<?= !empty($data['short_description']) ? $data['short_description'] : ''; ?>" required="" />
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-xl-2">
