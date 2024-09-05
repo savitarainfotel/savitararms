@@ -68,7 +68,7 @@ class Generalmodel extends MY_Model
 
         if($property_id){
             $platforms = array_map(function($platform) use ($property_id, $status) {
-                $this->db->select("rs.status, rs.min_rating, rs.rating_url")
+                $this->db->select("rs.status, rs.min_rating, rs.rating_url, rs.average_review")
                                                 ->where('rs.property_id', $property_id)
                                                 ->where('rs.rating_platform_id', $platform['id']);
 

@@ -10,7 +10,7 @@
         <div class="row layout-top-spacing">
             <div class="col-lg-12 col-12 layout-spacing">
                 <div class="statbox widget box box-shadow">
-                    <div class="widget-header">                                
+                    <div class="widget-header">
                         <div class="row">
                             <div class="col-xl-12 col-md-12 col-sm-12 col-12">
                                 <h4> Property Information </h4>
@@ -57,6 +57,12 @@
                                 <div class="form-group mb-4">
                                     <label for="short_description">Short Description</label> <span class="text-danger">*</span>
                                     <input type="text" class="form-control f-required" id="short_description" name="short_description" value="<?= !empty($data['short_description']) ? $data['short_description'] : ''; ?>" required="" />
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="form-group mb-4">
+                                    <label for="long_description">Long Description</label> <span class="text-danger">*</span>
+                                    <textarea id="long_description" name="long_description" class="form-control ckeditor-areas f-required" required=""><?= !empty($data['long_description']) ? $data['long_description'] : ''; ?></textarea>
                                 </div>
                             </div>
                         </div>

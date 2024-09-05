@@ -5,10 +5,13 @@
  */
 class User_ratings extends CI_Controller
 {
+    public $path = 'uploads/';
+
     public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('generalmodel');
+        $this->path = $this->path.$this->config->item('property_images');
 	}
 
     protected $table = SEND_INVITES_TABLE;
@@ -22,11 +25,12 @@ class User_ratings extends CI_Controller
 
         if($rating_platform_id && $inviteData) {
             $rating_platform_id = d_id($rating_platform_id);
-            $platformData = $this->generalmodel->get(RATING_SETTINGS_TABLE, 'min_rating, rating_url', ['property_id' => $inviteData['property_id'], 'rating_platform_id' => $rating_platform_id, 'status' => 1]);
+            $platformData = $this->generalmodel->get(RATING_SETTINGS_TABLE, 'min_rating, rating_url, average_review', ['property_id' => $inviteData['property_id'], 'rating_platform_id' => $rating_platform_id, 'status' => 1]);
+            $data['property'] = $this->generalmodel->get(PROPERTIES, 'name, short_description, long_description, images', ['id' => $inviteData['property_id'], 'is_delete' => 0]);
         }
 
         if($this->input->is_ajax_request()) {
-            if(empty($inviteData) || empty($platformData)) {
+            if(empty($inviteData) || empty($platformData) || empty($data['property'])) {
                 responseMsg(false, 'Link Expired!', true);
             }
 
@@ -56,7 +60,10 @@ class User_ratings extends CI_Controller
             $data['platformData'] = $platformData;
             
             if(!empty($platformData)) {
-                $data['rating_platform'] = $this->generalmodel->get(RATING_PLATFORMS_TABLE, 'logo', ['id' => $rating_platform_id]);    
+                $data['rating_platform'] = $this->generalmodel->get(RATING_PLATFORMS_TABLE, 'logo', ['id' => $rating_platform_id]);
+                if(empty($data['property'])) {
+                    return $this->link_expired();
+                }
                 return $this->template->load('front-end/template', 'user_ratings/user_ratings', $data);
             } else {
                 $data['rating_platforms'] = $this->generalmodel->getRatingPlatforms($inviteData['property_id'], 1);

@@ -20,6 +20,17 @@ const ajax_error_message_rsp = function (jqXHR){
     }
 }
 
+const snackbar = (text) => {
+    const options = {
+        text: text, duration: 3000, pos: 'bottom-center'
+    };
+
+    Snackbar.show(options);
+}
+
+const showMessage = $('input[name="showMessage"]').val();
+if(showMessage) snackbar(showMessage);
+
 const submitForm = (form) => {
   event.preventDefault();
   const deferred = $.Deferred();

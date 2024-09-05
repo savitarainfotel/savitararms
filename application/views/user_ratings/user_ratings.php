@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- loan-reviews-details start -->
-<section class="reviews-details section h-auto">
+<section class="reviews-details section">
     <div class="container ">
         <div class="row">
             <div class="col-12 col-xl-12 order-1 order-xl-0">
@@ -13,14 +13,12 @@
                                         <?= img($this->config->item('platforms-logos') . $rating_platform['logo'], '', 'width="100"') ?>
                                     </div>
                                     <div class="loan-reviews__review">
-                                        <p class="rating"> 4.9</p>
+                                        <p class="rating"><?= $platformData['average_review'] ?></p>
                                         <div class="d-flex gap-2 flex-column">
                                             <div class="star_review">
-                                                <i class="bi bi-star-fill star-active"></i>
-                                                <i class="bi bi-star-fill star-active"></i>
-                                                <i class="bi bi-star-fill star-active"></i>
-                                                <i class="bi bi-star-fill star-active"></i>
-                                                <i class="bi bi-star-half star-active"></i>
+                                                <?php for ($i=1; $i <= 5; $i++) {
+                                                    echo '<i class="bi bi-star'.($i <= $platformData['average_review'] ? '-fill' : ($i <= ceil($platformData['average_review']) ? '-half' : '')).' star-active"></i>';
+                                                } ?>
                                             </div>
                                             <p class="fs-small">Average Review</p>
                                         </div>
@@ -28,8 +26,8 @@
                                 </div>
                                 <div class="loan-reviews__part-two">
                                     <div class="reviews-heading">
-                                        <h4 class="reviews-heading__title">Student Loans</h4>
-                                        <p class="reviews-heading__content">Canada Largest online mortgage lender</p>
+                                        <h4 class="reviews-heading__title"><?= $property['name'] ?></h4>
+                                        <p class="reviews-heading__content"><?= $property['short_description'] ?></p>
                                     </div>
                                     <div class="reviews-inner">
                                         <?= form_open('', 'class="ajax-form text-left"') ?>
@@ -221,7 +219,7 @@
                                             </div>
                                             <div class="col-md-12 comment-section d-none">
                                                 <div class="mb-3 form-group">
-                                                    <textarea name="comments" id="comments" class="form-control" rows="3" placeholder="Add your comment here" required=""></textarea>
+                                                    <textarea name="comments" id="comments" class="form-control mb-3" rows="3" placeholder="Add your comment here" required=""></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12 comment-section d-none">
@@ -235,26 +233,25 @@
                                 </div>
                             </div>
                         </div>
+                        <?php if(!empty($property['long_description'])): ?>
                         <div class="section__content wow fadeInUp" data-wow-duration="0.8s">
-                            <h2 class="section__content-title">The Benefits of Consolidating Your Student Loans</h2>
-                            <p class="section__content-text">At FINVIEW, we provide comprehensive and unbiased loan reviews to help you navigate the complex world of financial lending. Our team of experts meticulously researches and analyzes various loan options to provide you with reliable and up-to-date information.</p>
-                            <p class="section__content-text">When it comes to Loan, we've conducted a thorough review to provide you with all the essential details. We delve into the details of each loan, examining interest rates, repayment terms, eligibility criteria, and any associated fees.</p>
+                            <?= html_entity_decode($property['long_description']) ?>
                         </div>
-                        <div class="card charges__card flex-column flex-xxl-row wow fadeInUp" data-wow-duration="0.8s">
-                            <div class="charges__part">
-                                <img src="https://pixner.net/finview/main/assets/images/blog_details_sub.png" alt="" srcset="">
+                        <?php endif; ?>
+                        <?php $images = !empty($property['images']) ? json_decode($property['images'], true) : []; if(!empty($images)): ?>
+                            <div class="card charges__card flex-column flex-xxl-row wow fadeInUp" data-wow-duration="0.8s">
+                                <?php foreach ($images as $image): ?>
+                                    <?php if(is_file($this->path.$image)): ?>
+                                        <div class="charges__part">
+                                            <?= img($this->path.$image); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </div>
-                            <div class="charges__part">
-                            <img src="https://pixner.net/finview/main/assets/images/blog_details_sub.png" alt="" srcset="">
-                            </div>
-                            <div class="charges__part">
-                            <img src="https://pixner.net/finview/main/assets/images/blog_details_sub.png" alt="" srcset="">
-                            </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-           
         </div>
     </div>
 </section>

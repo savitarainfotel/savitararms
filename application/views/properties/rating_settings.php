@@ -66,7 +66,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-2">
+                                <div class="form-group mb-4">
+                                    <label for="average_review_<?= e_id($platform['id']) ?>">Average Review</label> <span class="text-danger">*</span>
+                                    <select name="settings[<?= e_id($platform['id']) ?>][average_review]" id="average_review_<?= e_id($platform['id']) ?>" class="form-control f-required">
+                                        <?php for ($rating = 1; $rating <= 5; $rating += 0.5) {
+                                            echo '<option value="'.$rating.'" '.(!empty($setting['average_review']) && $setting['average_review'] == $rating ? 'selected' : '').'>'.$rating.'</option>';
+                                        } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
                                 <div class="form-group mb-4">
                                     <label for="rating_url_<?= e_id($platform['id']) ?>">Rating URL</label>
                                     <input type="text" class="form-control" id="rating_url_<?= e_id($platform['id']) ?>" name="settings[<?= e_id($platform['id']) ?>][rating_url]" value="<?= !empty($setting['rating_url']) ? $setting['rating_url'] : ''; ?>" />

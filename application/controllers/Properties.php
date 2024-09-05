@@ -9,6 +9,7 @@ class Properties extends MY_Controller {
 	public function __construct() {
         parent::__construct();
         $this->clientList = $this->generalmodel->getClients();
+        $this->path = $this->path.$this->config->item('property_images');
     }
 
 	public function index() {
@@ -195,6 +196,7 @@ class Properties extends MY_Controller {
                     $settingsArray['status'] = !empty($setting['status']) ? $setting['status'] : 0;
                     $settingsArray['min_rating'] = $setting['min_rating'];
                     $settingsArray['rating_url'] = $setting['rating_url'];
+                    $settingsArray['average_review'] = $setting['average_review'];
 
                     if($property_id) {
                         $u_id = $this->generalmodel->update($where, $settingsArray, RATING_SETTINGS_TABLE);
@@ -257,6 +259,62 @@ class Properties extends MY_Controller {
             responseMsg(false, 'Parameter missing!');
         }
     }
+    
+    public function upload_images(String $id) {
+        checkAccess(PROPERTIES, 'upload_images');
+        $id = d_id($id);
+        $data['data'] = $this->generalmodel->get($this->table, '*', ['id' => $id, 'is_delete' => 0]);
+
+		if($this->input->is_ajax_request()) {
+            if(!$data['data']) {
+                responseMsg(false, 'Property not found!');
+            }
+
+            if(!in_array($this->input->post('image'), [1,2,3])) {
+                responseMsg(false, 'Not valid image number!');
+            }
+
+            $image_no = $this->input->post('image');
+
+            $upload = $this->uploadImage("image_$image_no");
+
+            if($upload['error']) {
+                responseMsg(false, $upload['message']);
+            }
+
+            $images = !empty($data['data']['images']) ? json_decode($data['data']['images'], true) : [];
+
+            $images[$image_no] = $upload['message'];
+
+            $postArray = [
+                'images' => json_encode($images)
+            ];
+
+            $u_id = $this->generalmodel->update(['id' => $id], $postArray, $this->table);
+
+            if($u_id){
+                responseMsg(true, 'Property image has been uploading successfully!', true);
+            } else {
+                responseMsg(false, 'Something went wrong while uploading property image!');
+            }
+        } else{
+            if(!$data['data']) {
+                flashMsg('Property not found!', $this->redirect);
+            }
+
+            $data['title'] = 'Upload Images';
+            $data['pageTitle'] = 'Properties';
+            $data['validate'] = true;
+
+            //!Breadcrumbs
+            $this->breadcrumb->add('Home', site_url());
+            $this->breadcrumb->add('Properties', site_url($this->redirect));
+            $this->breadcrumb->add($data['data']['name'], site_url($this->redirect.'/view/'.e_id($data['data']['id'])));
+            $this->breadcrumb->add('Upload Images', site_url($this->redirect));
+
+            return $this->template->load('template', $this->redirect.'/upload_images', $data);
+        }
+	}
 
     protected $validate = [
         [

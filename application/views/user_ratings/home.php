@@ -12,14 +12,12 @@
                             <?= img($this->config->item('platforms-logos').$platform['logo'], '', 'width="100"') ?>
                         </div>
                         <div class="loan-reviews__review">
-                            <p class="rating"> 4.9</p>
+                            <p class="rating"><?= $platform['setting']['average_review']; ?></p>
                             <div class="d-flex gap-2 flex-column">
                                 <div class="star_review">
-                                    <i class="bi bi-star-fill star-active"></i>
-                                    <i class="bi bi-star-fill star-active"></i>
-                                    <i class="bi bi-star-fill star-active"></i>
-                                    <i class="bi bi-star-fill star-active"></i>
-                                    <i class="bi bi-star-half star-active"></i>
+                                    <?php for ($i=1; $i <= 5; $i++) {
+                                        echo '<i class="bi bi-star'.($i <= $platform['setting']['average_review'] ? '-fill' :  ($i <= ceil($platform['setting']['average_review']) ? '-half' : '')).' star-active"></i>';
+                                    } ?>
                                 </div>
                                 <p class="fs-small">Average Review</p>
                             </div>
@@ -28,7 +26,6 @@
                     <div class="loan-reviews__part-two">
                         <div class="reviews-heading">
                             <h4 class="reviews-heading__title"><?= $platform['platform'] ?></h4>
-                            <!-- <p class="reviews-heading__content">America’s Largest online mortgage lender</p> -->
                         </div>
                         <div class="reviews-inner">
                             <ul>

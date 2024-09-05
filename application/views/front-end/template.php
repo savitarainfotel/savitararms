@@ -58,7 +58,7 @@ $currentController = strtolower($this->router->fetch_class());
                                 <div class="nav-right d-none d-xl-block">
                                     <div class="nav-right__search">
                                         <?= anchor('auth/login', 'Sign In <i class="bi bi-arrow-up-right"></i><span></span>', 'class="btn_theme btn_theme_active"'); ?>
-                                        <?= anchor('home/book_now', 'Book Now <i class="bi bi-arrow-up-right"></i><span></span>', 'class="btn_theme btn_theme_active"'); ?>
+                                        <?= anchor('book-now', 'Book Now <i class="bi bi-arrow-up-right"></i><span></span>', 'class="btn_theme btn_theme_active"'); ?>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@ $currentController = strtolower($this->router->fetch_class());
                                 <?= anchor('auth/login', 'Sign In', 'class="menu_link"'); ?>
                             </li>
                             <li>
-                                <?= anchor('home/book_now', 'Book Now', 'class="menu_link"'); ?>
+                                <?= anchor('book-now', 'Book Now', 'class="menu_link"'); ?>
                             </li>
                         </ul>
                     </div>
@@ -173,9 +173,6 @@ $currentController = strtolower($this->router->fetch_class());
     <?= script("assets/vendor/jquery-ui/jquery-ui.min.js".ASSET_VERSION); ?>
     <!-- wow js -->
     <?= script("assets/vendor/wow/wow.min.js".ASSET_VERSION); ?>
-
-    <?= script("assets/vendor/jquery-validate/jquery.validate.min.js".ASSET_VERSION); ?>
-
     <!--  / js dependencies end  -->
 
     <!-- plugins js -->
@@ -184,7 +181,14 @@ $currentController = strtolower($this->router->fetch_class());
     <?php if(!empty($validate)): ?>
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+        <!-- snackbar -->
+        <?= link_tag('assets/src/plugins/src/notification/snackbar/snackbar.min.css'.ASSET_VERSION); ?>
+        <?= link_tag('assets/src/plugins/css/light/notification/snackbar/custom-snackbar.css'.ASSET_VERSION); ?>
+        <?= link_tag('assets/src/plugins/css/dark/notification/snackbar/custom-snackbar.css'.ASSET_VERSION); ?>
+
+        <?= script("assets/src/plugins/src/notification/snackbar/snackbar.min.js".ASSET_VERSION); ?>
     <?php endif; ?>
+    <?= form_hidden('showMessage', $this->session->showMessage); ?>
     <!-- main js -->
     <?= script("assets/js/main.js".ASSET_VERSION); ?>
     <?= script("assets/js/script-f.js".ASSET_VERSION); ?>
