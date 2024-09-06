@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 define('APP_NAME', 'Savitara RMS');
-define('ASSET_VERSION', '?v='.($_SERVER['SERVER_NAME'] !== 'localhost' ? '1.0.1' : time()));
+define('ASSET_VERSION', '?v='.($_SERVER['SERVER_NAME'] !== 'localhost' ? '1.0.2' : time()));
 define('SERVER_NAME', ltrim($_SERVER['SERVER_NAME'], 'www.'));
 
 /* These constants are for navbar permissions and they are also table names of db */
