@@ -21,7 +21,7 @@
                         <tr>
                             <th class="no-content">#</th>
                             <th>Name</th>
-                            <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Client</th>' : ''; ?>
+                            <?= $this->user->is_admin || $this->user->is_super_admin || $this->user->is_agent ? '<th>Client</th>' : ''; ?>
                             <th>Created on</th>
                             <th class="no-content">Actions</th>
                         </tr>
@@ -30,7 +30,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Client</th>' : ''; ?>
+                            <?= $this->user->is_admin || $this->user->is_super_admin || $this->user->is_agent ? '<th>Client</th>' : ''; ?>
                             <th>Created on</th>
                             <th>Actions</th>
                         </tr>

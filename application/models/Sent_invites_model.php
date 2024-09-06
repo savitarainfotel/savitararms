@@ -18,8 +18,12 @@ class Sent_invites_model extends MY_Model {
                  ->join(USERS_TABLE.' AS c', 'c.id = p.client_id')
 				 ->join(INVITES_TABLE.' AS iu', 'iu.id = i.invite_id');
 
-		if(!$this->user->is_admin && !$this->user->is_super_admin) {
+		if(!$this->user->is_admin && !$this->user->is_super_admin && !$this->user->is_agent) {
 			$this->db->where('p.client_id', $this->user->id);
+		}
+
+		if($this->user->is_agent) {
+			$this->db->where('i.created_by', $this->user->id);
 		}
 
 		if($this->input->post('invite_id')) {

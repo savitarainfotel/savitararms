@@ -37,7 +37,7 @@
                                     <input type="text" class="form-control" id="phone" name="phone" value="<?= !empty($data['phone']) ? $data['phone'] : ''; ?>" maxlength="10" />
                                 </div>
                             </div>
-                            <?php if(!$this->user->is_admin && !$this->user->is_super_admin) {
+                            <?php if(!$this->user->is_admin && !$this->user->is_super_admin && !$this->user->is_agent) {
                                 echo form_hidden('client_id', e_id($this->user->id));
                             } else { ?>
                             <div class="col-xl-3">

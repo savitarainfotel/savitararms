@@ -46,7 +46,7 @@ class Invites extends MY_Controller {
 
             $sub_array[] = anchor($this->redirect.'/view/'.e_id($record->id), $record->name, 'class="text-primary text-decoration"');
 
-            if($this->user->is_admin || $this->user->is_super_admin) {
+            if($this->user->is_admin || $this->user->is_super_admin || $this->user->is_agent) {
                 $sub_array[] = anchor('users/edit/'.e_id($record->client_id), "$record->first_name $record->last_name", 'class="text-primary text-decoration"');
             }
 

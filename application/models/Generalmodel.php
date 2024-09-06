@@ -38,7 +38,7 @@ class Generalmodel extends MY_Model
     }
 
     public function getUserProfile($user_id){
-        $this->db->select('l.*, ut.type_name AS user_role, ut.is_super_admin, ut.is_admin')
+        $this->db->select('l.*, ut.type_name AS user_role, ut.is_super_admin, ut.is_admin, ut.is_agent')
                  ->from(USERS_TABLE.' AS l')
                  ->where('l.is_blocked', 0)
                  ->where('l.id', $user_id)
@@ -50,13 +50,19 @@ class Generalmodel extends MY_Model
     public function getClients() {
         $this->db->select("u.id, u.first_name, u.last_name");
 
-        if(!$this->user->is_admin && !$this->user->is_super_admin) {
+        if(!$this->user->is_admin && !$this->user->is_super_admin && !$this->user->is_agent) {
             $this->db->where('u.id', $this->user->id);
+        }
+
+        if($this->user->is_agent) {
+            $this->db->where('u.assigned_to', $this->user->id);
         }
 
         $this->db->where('u.is_blocked', 0);
         $this->db->where('ut.is_admin', 0);
         $this->db->where('ut.is_super_admin', 0);
+        $this->db->where('ut.is_agent', 0);
+
         $this->db->join(USER_TYPES_TABLE." AS ut", 'ut.id = u.type');
 
         return $this->db->get(USERS_TABLE.' AS u')->result_array();
@@ -89,8 +95,13 @@ class Generalmodel extends MY_Model
     public function getProperties($client_id = null) {
         $this->db->select("p.id, p.name, p.hosted_on");
 
-        if(!$this->user->is_admin && !$this->user->is_super_admin) {
+        if(!$this->user->is_admin && !$this->user->is_super_admin && !$this->user->is_agent) {
             $this->db->where('p.client_id', $this->user->id);
+        }
+
+        if($this->user->is_agent) {
+            $this->db->where('u.assigned_to', $this->user->id);
+            $this->db->join(USERS_TABLE.' AS u', 'u.id = p.client_id');
         }
 
         if($client_id) {

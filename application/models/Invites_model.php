@@ -15,9 +15,13 @@ class Invites_model extends MY_Model {
 				 ->where('i.is_delete', 0)
                  ->join(USERS_TABLE.' AS c', 'c.id = i.client_id');
 
-		if(!$this->user->is_admin && !$this->user->is_super_admin) {
+		if(!$this->user->is_admin && !$this->user->is_super_admin && !$this->user->is_agent) {
 			$this->db->where('c.id', $this->user->id);
 		}
+
+		if($this->user->is_agent) {
+            $this->db->where('i.created_by', $this->user->id);
+        }
 
 		if($count === false) $this->datatable();
 	}

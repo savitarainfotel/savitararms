@@ -15,9 +15,13 @@ class Properties_model extends MY_Model {
 				 ->where('p.is_delete', 0)
                  ->join(USERS_TABLE.' AS c', 'c.id = p.client_id');
 
-		if(!$this->user->is_admin && !$this->user->is_super_admin) {
+		if(!$this->user->is_admin && !$this->user->is_super_admin && !$this->user->is_agent) {
 			$this->db->where('c.id', $this->user->id);
 		}
+
+		if($this->user->is_agent) {
+            $this->db->where('c.assigned_to', $this->user->id);
+        }
 
 		if($count === false) $this->datatable();
 	}
