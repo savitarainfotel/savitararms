@@ -1,27 +1,28 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Users extends MY_Controller {
-    public $redirect = CLIENTS;
+class Agents extends MY_Controller {
+    public $redirect = AGENTS;
     private $table = USERS_TABLE;
 
 	public function index() {
-        checkAccess(CLIENTS);
+        checkAccess(AGENTS);
 
-		$data['title'] = 'Clients List';
-		$data['pageTitle'] = 'Clients';
+		$data['title'] = 'Agents List';
+		$data['pageTitle'] = 'Agents';
         $data['datatables'] = true;
         $data['datatable'] = "$this->redirect/get";
+        $data['is_agent'] = true;
 
         //!Breadcrumbs
         $this->breadcrumb->add('Home', site_url());
-        $this->breadcrumb->add('Clients', site_url($this->redirect));
+        $this->breadcrumb->add('Agents', site_url($this->redirect));
 
-		return $this->template->load('template', $this->redirect.'/list', $data);
+		return $this->template->load('template', USERS.'/list', $data);
 	}
 
     public function get() {
         check_ajax();
-        checkAccess(CLIENTS);
+        checkAccess(AGENTS);
 
         $this->load->model('Users_model', 'data');
 
@@ -29,8 +30,8 @@ class Users extends MY_Controller {
         $data = [];
         $sr = $this->input->post('start') + 1;
 
-        $edit = user_privilege_register(CLIENTS, 'edit');
-        $delete = user_privilege_register(CLIENTS, 'delete');
+        $edit = user_privilege_register(AGENTS, 'edit');
+        $delete = user_privilege_register(AGENTS, 'delete');
 
         foreach($fetch_data as $record)
         {
@@ -60,7 +61,7 @@ class Users extends MY_Controller {
     }
 
     public function create() {
-        checkAccess(CLIENTS, 'create');
+        checkAccess(AGENTS, 'create');
 
 		if($this->input->is_ajax_request()) {
             $this->form_validation->set_rules($this->validate);
@@ -73,43 +74,43 @@ class Users extends MY_Controller {
                 $id = $this->generalmodel->add($postArray, $this->table);
 
                 if($id){
-                    responseMsg(true, 'Client has been created successfully!', $this->redirect.'/edit/'.e_id($id));
+                    responseMsg(true, 'Agent has been created successfully!', $this->redirect.'/edit/'.e_id($id));
                 } else {
-                    responseMsg(false, 'Something went wrong while creating Client!');
+                    responseMsg(false, 'Something went wrong while creating Agent!');
                 }
             }
         } else{
-            $data['title'] = 'Create Client';
-            $data['pageTitle'] = 'Clients';
+            $data['title'] = 'Create Agent';
+            $data['pageTitle'] = 'Agents';
             $data['validate'] = true;
 
             //!Breadcrumbs
             $this->breadcrumb->add('Home', site_url());
-            $this->breadcrumb->add('Clients', site_url($this->redirect));
+            $this->breadcrumb->add('Agents', site_url($this->redirect));
             $this->breadcrumb->add('Create', site_url($this->redirect));
 
             $where = [
                 'is_delete'      => 0,
                 'is_admin'       => 0,
                 'is_super_admin' => 0,
-                'is_agent'       => 0
+                'is_agent'       => 1
             ];
 
             $data['userTypeList'] = $this->generalmodel->getAll(USER_TYPES_TABLE, 'id, type_name', $where, 'id ASC');
 
-            return $this->template->load('template', $this->redirect.'/create', $data);
+            return $this->template->load('template', USERS.'/create', $data);
         }
 	}
 
     public function edit(String $id) {
-        checkAccess(CLIENTS, 'edit');
+        checkAccess(AGENTS, 'edit');
 
         $id = d_id($id);
         $data['data'] = $this->generalmodel->get($this->table, '*', ['id' => $id, 'is_blocked' => 0]);
 
 		if($this->input->is_ajax_request()) {
             if(!$data['data']) {
-                responseMsg(false, 'Client not found!');
+                responseMsg(false, 'Agent not found!');
             }
 
             $this->form_validation->set_rules($this->validate);
@@ -122,40 +123,40 @@ class Users extends MY_Controller {
                 $u_id = $this->generalmodel->update(['id' => $id], $postArray, $this->table);
 
                 if($u_id){
-                    responseMsg(true, 'Client has been updated successfully!', $this->redirect.'/edit/'.e_id($id));
+                    responseMsg(true, 'Agent has been updated successfully!', $this->redirect.'/edit/'.e_id($id));
                 } else {
-                    responseMsg(false, 'Something went wrong while updating Client!');
+                    responseMsg(false, 'Something went wrong while updating Agent!');
                 }
             }
         } else{
             if(!$data['data']) {
-                flashMsg('Client not found!', $this->redirect);
+                flashMsg('Agent not found!', $this->redirect);
             }
 
-            $data['title'] = 'Edit Client';
-            $data['pageTitle'] = 'Clients';
+            $data['title'] = 'Edit Agent';
+            $data['pageTitle'] = 'Agents';
             $data['validate'] = true;
 
             //!Breadcrumbs
             $this->breadcrumb->add('Home', site_url());
-            $this->breadcrumb->add('Clients', site_url($this->redirect));
+            $this->breadcrumb->add('Agents', site_url($this->redirect));
             $this->breadcrumb->add('Edit', site_url($this->redirect));
 
             $where = [
                 'is_delete'      => 0,
                 'is_admin'       => 0,
                 'is_super_admin' => 0,
-                'is_agent'       => 0
+                'is_agent'       => 1
             ];
 
             $data['userTypeList'] = $this->generalmodel->getAll(USER_TYPES_TABLE, 'id, type_name', $where, 'id ASC');
 
-            return $this->template->load('template', $this->redirect.'/create', $data);
+            return $this->template->load('template', USERS.'/create', $data);
         }
 	}
 
     public function delete(){
-        checkAccess(CLIENTS, 'delete');
+        checkAccess(AGENTS, 'delete');
 
         if(!empty($this->input->post()) && $this->input->is_ajax_request()){
             $id = d_id($this->input->post('id'));
@@ -168,12 +169,12 @@ class Users extends MY_Controller {
                 $queryResult = $this->generalmodel->update(['id' => $id], $updateArray, $this->table);
 
                 if($queryResult) {
-                    responseMsg(true, 'Client has been deleted successfully!');
+                    responseMsg(true, 'Agent has been deleted successfully!');
                 } else {
-                    responseMsg(false, 'Something went wrong while deleting Client!');
+                    responseMsg(false, 'Something went wrong while deleting Agent!');
                 }
             } else {
-                responseMsg(false, 'Client details not found!');
+                responseMsg(false, 'Agent details not found!');
             }
         } else {
             responseMsg(false, 'Parameter missing!');

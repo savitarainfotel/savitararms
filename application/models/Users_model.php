@@ -3,9 +3,9 @@
 class Users_model extends MY_Model {
 
     public $table = USERS_TABLE." AS u";
-	public $select_column = ['u.id', 'u.first_name', 'u.last_name', 'u.email', 'u.mobile', 'ut.type_name'];
-	public $search_column = ['u.id', 'u.first_name', 'u.last_name', 'u.email', 'u.mobile', 'ut.type_name'];
-    public $order_column = [null, 'u.first_name', 'u.email', 'u.mobile', 'ut.type_name', null];
+	public $select_column = ['u.id', 'u.first_name', 'u.last_name', 'u.email', 'u.mobile'];
+	public $search_column = ['u.id', 'u.first_name', 'u.last_name', 'u.email', 'u.mobile'];
+    public $order_column = [null, 'u.first_name', 'u.email', 'u.mobile', null];
 
 	public $order = ['u.id' => 'ASC'];
 
@@ -14,6 +14,7 @@ class Users_model extends MY_Model {
 		$this->db->select($count === false ? $this->select_column : 'u.id')
 				 ->from($this->table)
 				 ->where(['ut.is_admin' => $this->input->post('is_admin') ?? 0])
+				 ->where(['ut.is_agent' => $this->input->post('is_agent') ?? 0])
 				 ->where(['u.is_blocked' => 0, 'ut.is_delete' => 0, 'ut.is_super_admin' => 0])
 				 ->join(USER_TYPES_TABLE." AS ut", 'ut.id = u.type');
 

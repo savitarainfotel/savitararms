@@ -222,7 +222,7 @@ if($('.ajax-form').length){
     let rules;
 
     if(typeof rule == 'undefined') {
-        const isProfileOrUpdate = window.location.href.includes('/profile') || window.location.href.includes('/users/edit/');
+        const isProfileOrUpdate = window.location.href.includes('/profile') || window.location.href.includes('/users/edit/') || window.location.href.includes('/agents/edit/');
 
         rules = {
             password: {
@@ -319,6 +319,7 @@ if($('.datatable').length > 0) {
                     data.csrf_token = $("input[name='csrf_hash']").val();
                     data.invite_id = $("[name='invite_id']").val();
                     data.export = $("input[name='data-export']").val();
+                    data.is_agent = $("input[name='is_agent']").val();
                 },
                 complete: function(response) {
                     $('.bs-tooltip').tooltip();
@@ -684,7 +685,7 @@ const app = {
     },
 
     validateForm() {
-        const isProfileOrUpdate = window.location.href.includes('/profile') || window.location.href.includes('/users/edit/');
+        const isProfileOrUpdate = window.location.href.includes('/profile') || window.location.href.includes('/users/edit/') || window.location.href.includes('/agents/edit/');
 
         const rules = {
             password: {

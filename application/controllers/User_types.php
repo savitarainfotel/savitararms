@@ -50,29 +50,6 @@ class User_types extends MY_Controller {
                 $sub_array[] = '';
             }
 
-            /* if($edit) {
-                $action .= '<a class="dropdown-item" href="'.site_url($this->redirect.'/edit/'.e_id($record->id)).'">
-                                <i class="far fa-pencil-alt mr-2"></i> Edit
-                            </a>';
-            }
-
-            if($permissions) {
-                $action .= form_open($this->redirect.'/get-permissions-form/'.e_id($record->id), 'method="GET"');
-                $action .= '<a class="dropdown-item btn-get-permissions" href="javascript:;">
-                                <i class="far fa-user mr-2"></i> Permissions
-                            </a>';
-                $action .= form_close();
-            }
-
-            if($delete) {
-                $action .= form_open($this->redirect.'/delete');
-                $action .= form_hidden('id', e_id($record->id));
-                $action .= '<a class="dropdown-item delete-archive-item" href="javascript:;">
-                                <i class="far fa-trash-alt mr-2"></i> Delete
-                            </a>';
-                $action .= form_close();
-            } */
-
             $data[] = $sub_array;
             $sr++;
         }

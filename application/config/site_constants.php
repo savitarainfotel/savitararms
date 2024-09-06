@@ -11,6 +11,7 @@ define('USERS', "users");
 define('USER_TYPES', "user_types");
 define('PROPERTIES', "properties");
 define('INVITES', "invites");
+define('AGENTS', "agents");
 
 define('USERS_TABLE', "users");
 define('USER_TYPES_TABLE', "user_types");

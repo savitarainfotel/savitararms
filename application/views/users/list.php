@@ -10,7 +10,7 @@
                     </div>
                     <?php if(user_privilege_register(CLIENTS, 'create')): ?>
                         <div class="col-xl-6 col-md-6 col-sm-6 col-6">
-                            <a href="<?php echo site_url($this->redirect.'/create'); ?>" class="btn btn-primary m-2 float-end"><i class="far fa-plus"></i> Add New Client</a>
+                            <a href="<?php echo site_url($this->redirect.'/create'); ?>" class="btn btn-primary m-2 float-end"><i class="far fa-plus"></i> Add New</a>
                         </div>
                     <?php endif ?>
                 </div>
@@ -23,7 +23,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>User type</th>
                             <th class="target">Actions</th>
                         </tr>
                     </thead>
@@ -33,7 +32,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>User type</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
@@ -42,3 +40,4 @@
         </div>
     </div>
 </div>
+<?= form_hidden('is_agent', $is_agent ?? 0) ?>
