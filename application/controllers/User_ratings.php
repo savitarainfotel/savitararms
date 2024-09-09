@@ -20,7 +20,7 @@ class User_ratings extends CI_Controller
     {
         $send_invites_id = d_id($send_invites_id);
 
-        $inviteData = $this->generalmodel->get($this->table, 'status, property_id', ['id' => $send_invites_id, 'status' => 'Email Sent', 'is_delete' => 0]);
+        $inviteData = $this->generalmodel->get($this->table, 'status, property_id', ['id' => $send_invites_id, 'rating_completed' => 0, 'is_delete' => 0]);
         $platformData = [];
 
         if($rating_platform_id && $inviteData) {
@@ -38,7 +38,8 @@ class User_ratings extends CI_Controller
                 'rating_platform_id'    => $rating_platform_id,
                 'rating'                => $this->input->post('rating'),
                 'comments'              => $this->input->post('comments'),
-                'status'                => 'Rating given'
+                'status'                => 'Rating given',
+                'rating_completed'      => 1
             ];
 
             $redirect = $this->input->post('rating') > $platformData['min_rating'] ? $platformData['rating_url'] : site_url('user-ratings/thank-you');

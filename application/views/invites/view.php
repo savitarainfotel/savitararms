@@ -75,7 +75,8 @@
                                 <th>Rating</th>
                                 <th>Comments</th>
                                 <th>Created on</th>
-                                <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Client</th>' : ''; ?>
+                                <?= $this->user->is_admin || $this->user->is_super_admin ? '<th class="no-content">Client</th>' : ''; ?>
+                                <th class="no-content">Resend</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -88,6 +89,7 @@
                                 <th>Comments</th>
                                 <th>Created on</th>
                                 <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Client</th>' : ''; ?>
+                                <th>Resend</th>
                             </tr>
                         </tfoot>
                     </table>

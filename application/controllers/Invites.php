@@ -337,6 +337,12 @@ class Invites extends MY_Controller {
                 $sub_array[] = anchor('users/edit/'.e_id($record->client_id), "$record->first_name $record->last_name", 'class="text-primary text-decoration"');
             }
 
+            $sub_array[] = form_open($this->redirect.'/resend-email', '', ['id' => e_id($record->id)]).
+                                    '<a class="bs-tooltip dropdown-item delete-archive-item" href="javascript:;" data-bs-toggle="tooltip" data-bs-placement="top" data-original-title="Resend Email" aria-label="Resend Email" data-bs-original-title="Resend Email">
+                                        '.status('Resend Email').'
+                                    </a>'.
+                            form_close();
+
             $data[] = $sub_array;
         }
 
@@ -348,6 +354,45 @@ class Invites extends MY_Controller {
         ];
 
         die(json_encode($output));
+    }
+
+    public function resend_email()
+    {
+        checkAccess(INVITES, 'send_invites');
+
+        if(!empty($this->input->post()) && $this->input->is_ajax_request()){
+            $id = d_id($this->input->post('id'));
+            $sendInviteData = $this->generalmodel->get(SEND_INVITES_TABLE, 'id, invite_id, property_id', ['id' => $id]);
+
+            if(!empty($sendInviteData)){
+                $this->load->library('appmails');
+                $platforms = $this->generalmodel->getRatingPlatforms($sendInviteData['property_id'], 1);
+
+                $email_settings = [];
+                foreach ($platforms as $platform) {
+                    if(empty($platform['setting'])) continue;
+                    $email_settings[] = $platform;
+                }
+
+                $inviteData = $this->generalmodel->get($this->table, 'id, email, name', ['id' => $sendInviteData['invite_id']]);
+
+                if(!empty($email_settings) && !empty($inviteData) && $this->appmails->send_invites($inviteData, $id)) {
+                    $u_id = $this->generalmodel->update(['id' => $id], ['status' => 'Email Resent', 'rating_completed' => 0], SEND_INVITES_TABLE);
+
+                    if($u_id) {
+                        responseMsg(true, 'Invite email has been resend successfully!', true);
+                    } else {
+                        responseMsg(false, 'Something went wrong while resend invite email!');
+                    }
+                } else {
+                    responseMsg(false, 'Something went wrong while resend invite email!');
+                }
+            } else {
+                responseMsg(false, 'Invite details not found!');
+            }
+        } else {
+            responseMsg(false, 'Parameter missing!');
+        }
     }
 
     protected $validate = [
