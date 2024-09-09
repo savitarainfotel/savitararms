@@ -72,6 +72,30 @@
                                     <input type="password" class="form-control" name="confirm_password" id="confirm_password" <?= $this->uri->segment(2) === 'create' ? 'required=""' : ''; ?> />
                                 </div>
                             </div>
+                            <?php if($this->uri->segment(1) === 'users' && ($this->user->is_admin || $this->user->is_super_admin)): ?>
+                            <?php if(!$this->user->is_admin && !$this->user->is_super_admin) {
+                                echo form_hidden('assigned_to', e_id($this->user->id));
+                            } else { ?>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="assigned_to">Agent</label> <span class="text-danger">*</span>
+                                    <select name="assigned_to" id="assigned_to" class="form-control tom-select" required="">
+                                        <option value="">Select Agent</option>
+                                        <?php
+                                        if(!empty($this->agentsList)){
+                                            foreach($this->agentsList as $agent){
+                                                $selected = !empty($data['assigned_to']) && $data['assigned_to'] === $agent['id'] ? 'selected' : '';
+                                        ?>
+                                            <option value="<?= e_id($agent['id']) ?>" <?= $selected; ?>><?= $agent['first_name'].' '.$agent['last_name']; ?></option>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <?php } ?>
+                            <?php endif; ?>
                         </div>
                         <div class="row">
                             <div class="col-xl-2">

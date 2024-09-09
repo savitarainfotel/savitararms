@@ -4,6 +4,11 @@ class Users extends MY_Controller {
     public $redirect = CLIENTS;
     private $table = USERS_TABLE;
 
+	public function __construct() {
+        parent::__construct();
+        $this->agentsList = $this->generalmodel->getAgents();
+    }
+    
 	public function index() {
         checkAccess(CLIENTS);
 
@@ -39,6 +44,9 @@ class Users extends MY_Controller {
             $sub_array[] = anchor($this->redirect.'/edit/'.e_id($record->id), "$record->first_name $record->last_name", 'class="text-primary text-decoration"');
             $sub_array[] = $record->email;
             $sub_array[] = $record->mobile;
+            if($this->user->is_admin || $this->user->is_super_admin) {
+                $sub_array[] = anchor('agents/edit/'.e_id($record->assigned_to), "$record->agent_first_name $record->agent_last_name", 'class="text-primary text-decoration"');
+            }
 
             $action = get_link('edit', $edit, $this->redirect.'/edit/'.e_id($record->id));
             $action .= get_link('delete', $delete, $this->redirect.'/delete', ['id' => e_id($record->id)]);
@@ -271,6 +279,14 @@ class Users extends MY_Controller {
                 'required' => "%s is required",
                 'valid_email' => "%s is invalid",
                 'max_length' => "Max 100 chars allowed"
+            ],
+        ],
+        [
+            'field' => 'assigned_to',
+            'label' => 'Agent',
+            'rules' => 'required',
+            'errors' => [
+                'required' => "%s is required"
             ],
         ],
         [

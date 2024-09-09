@@ -11,6 +11,10 @@ class Users_model extends MY_Model {
 
 	public function make_query($count = false)
 	{
+		if($this->user->is_admin || $this->user->is_super_admin) {
+			array_push($this->select_column, 'a.first_name AS agent_first_name', 'a.last_name AS agent_last_name', 'u.assigned_to');
+		}
+
 		$this->db->select($count === false ? $this->select_column : 'u.id')
 				 ->from($this->table)
 				 ->where(['ut.is_admin' => $this->input->post('is_admin') ?? 0])
@@ -20,6 +24,10 @@ class Users_model extends MY_Model {
 
 		if(!$this->user->is_admin && !$this->user->is_super_admin) {
 			$this->db->where('u.id', $this->user->id);
+		}
+
+		if($this->user->is_admin || $this->user->is_super_admin) {
+			$this->db->join(USERS_TABLE." AS a", 'a.id = u.assigned_to', 'left');
 		}
 
 		if($count === false) $this->datatable();

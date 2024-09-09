@@ -112,4 +112,21 @@ class Generalmodel extends MY_Model
 
         return $this->db->get(PROPERTIES_TABLE.' AS p')->result_array();
     }
+
+    public function getAgents() {
+        $this->db->select("u.id, u.first_name, u.last_name");
+
+        if($this->user->is_agent) {
+            $this->db->where('u.id', $this->user->id);
+        }
+
+        $this->db->where('u.is_blocked', 0);
+        $this->db->where('ut.is_admin', 0);
+        $this->db->where('ut.is_super_admin', 0);
+        $this->db->where('ut.is_agent', 1);
+
+        $this->db->join(USER_TYPES_TABLE." AS ut", 'ut.id = u.type');
+
+        return $this->db->get(USERS_TABLE.' AS u')->result_array();
+    }
 }

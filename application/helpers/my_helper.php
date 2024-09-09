@@ -369,7 +369,7 @@ function get_post_data()
                     $postArray['password_salt'] = $hp['salt'];
                     $postArray['password'] = $hp['hashedPassword'];
                 }
-            } else if(in_array($k, ['type', 'nationality', 'departure_from_country', 'departure_to_country', 'lead_id', 'client_id', 'invite_id'])) {
+            } else if(in_array($k, ['type', 'nationality', 'departure_from_country', 'departure_to_country', 'lead_id', 'client_id', 'invite_id', 'assigned_to'])) {
                 $postArray[$k] = !empty($v) ? d_id($v) : 0;
             } else if(in_array($k, ['date_of_birth', 'departure_from', 'departure_to', 'next_follow_date'])) {
                 $postArray[$k] = !empty($v) ? date('Y-m-d', strtotime(str_replace('/', '-', $v))) : '';

@@ -23,15 +23,17 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
+                            <?= $this->uri->segment(1) === 'users' && ($this->user->is_admin || $this->user->is_super_admin) ? '<th class="target">Agent</th>' : ''; ?>
                             <th class="target">Actions</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th class="target">#</th>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
+                            <?= $this->uri->segment(1) === 'users' && ($this->user->is_admin || $this->user->is_super_admin) ? '<th>Agent</th>' : ''; ?>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
