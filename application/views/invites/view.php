@@ -76,6 +76,7 @@
                                 <th>Comments</th>
                                 <th>Created on</th>
                                 <?= $this->user->is_admin || $this->user->is_super_admin ? '<th class="no-content">Client</th>' : ''; ?>
+                                <?= $this->user->is_admin || $this->user->is_super_admin ? '<th class="no-content">Agent</th>' : ''; ?>
                                 <th class="no-content">Resend</th>
                             </tr>
                         </thead>
@@ -89,6 +90,7 @@
                                 <th>Comments</th>
                                 <th>Created on</th>
                                 <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Client</th>' : ''; ?>
+                                <?= $this->user->is_admin || $this->user->is_super_admin ? '<th>Agent</th>' : ''; ?>
                                 <th>Resend</th>
                             </tr>
                         </tfoot>
