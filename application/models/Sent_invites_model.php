@@ -2,7 +2,7 @@
 
 class Sent_invites_model extends MY_Model {
     public $table = SEND_INVITES_TABLE." AS i";
-	public $select_column = ['i.id', 'CONCAT(p.name, " - ", hosted_on) AS property_name', 'i.status', 'rp.platform', 'i.rating', 'i.comments', 'i.created_at', 'c.first_name', 'c.last_name', 'p.client_id', 'iu.name', 'iu.email', 'iu.phone'];
+	public $select_column = ['i.id', 'CONCAT(p.name, " - ", hosted_on) AS property_name', 'i.status', 'rp.platform', 'i.rating', 'i.comments', 'i.created_at', 'c.first_name', 'c.last_name', 'p.client_id', 'iu.name', 'iu.email', 'iu.phone', 'cb.first_name AS agent_first_name', 'cb.last_name AS agent_last_name', 'i.created_by'];
 	public $search_column = ['p.name', 'i.status', 'i.created_at', 'c.first_name', 'c.last_name', 'rp.platform', 'i.rating', 'i.comments'];
     public $order_column = [null, 'p.name', 'i.status', 'rp.platform', 'i.rating', 'i.comments', 'i.created_at', 'c.first_name', null];
 
@@ -16,6 +16,7 @@ class Sent_invites_model extends MY_Model {
                  ->join(PROPERTIES_TABLE.' AS p', 'p.id = i.property_id')
                  ->join(RATING_PLATFORMS_TABLE.' AS rp', 'rp.id = i.rating_platform_id', 'LEFT')
                  ->join(USERS_TABLE.' AS c', 'c.id = p.client_id')
+                 ->join(USERS_TABLE.' AS cb', 'cb.id = i.created_by')
 				 ->join(INVITES_TABLE.' AS iu', 'iu.id = i.invite_id');
 
 		if(!$this->user->is_admin && !$this->user->is_super_admin && !$this->user->is_agent) {

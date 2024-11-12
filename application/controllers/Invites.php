@@ -335,6 +335,7 @@ class Invites extends MY_Controller {
 
             if($this->user->is_admin || $this->user->is_super_admin) {
                 $sub_array[] = anchor('users/edit/'.e_id($record->client_id), "$record->first_name $record->last_name", 'class="text-primary text-decoration"');
+                $sub_array[] = anchor('agents/edit/'.e_id($record->created_by), "$record->agent_first_name $record->agent_last_name", 'class="text-primary text-decoration"');
             }
 
             $sub_array[] = form_open($this->redirect.'/resend-email', '', ['id' => e_id($record->id)]).
